@@ -63,7 +63,7 @@ public class MapsActivity extends FragmentActivity implements
     public static boolean isLogedin;
 
 
-    public static int driverState;
+    public static int  driverState;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
