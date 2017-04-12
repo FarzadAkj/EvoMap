@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">مکان یاب</string>
+    <string name="user_name">نام کاربری</string>
+    <string name="Pass_word">کلمه عبور</string>
+    <string name="login">ورود</string>
+    <string name="exit">خروج</string>
+    <string name="exit_Message"> آیا مطمِن هستید که برنامه بسته شود ؟ </string>
+    <string name="yes"> بله </string>
+    <string name="no"> خیر</string>
+    <string name="communication_dialog">در حال برقراری ارتباط با سرور</string>
+    <string name="communication_problem">خطا در برقراری ارتباط با سرور</string>
+    <string name="authentication_success">دسترسی تایید شد</string>
+    <string name="GPS_OFF">به نظر میرسد gps دستگاه شما خاموش است آیا مایل به روشن کردن آن هستید؟</string>
+    <string name="slide_1_Welcome">خوش آمدید به</string>
+    <string name="EvoMap">EvoMap</string>
+
+    <string name="Update_Time">فاصله زمانی به روزرسانی</string>
+    <string name="Update_Distance">فاصله مکانی به روزرسانی</string>
+    <string name="Log_Out">خروج از حساب کاربری</string>
+    <string name="ETC">دیگر...</string>
+
+</resources>

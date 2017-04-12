@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#80deea</color>
+    <color name="colorPrimaryDark">#b589c0f1</color>
+    <color name="colorAccent">#42a5f5</color>
+    <color name="MycolorAccent">#9fc1f9</color>
+    <color name="transparent">#00ffffff</color>
+
+    <color name="grey">#e0e0e0</color>
+    <color name="light_grey">#EEEEEE</color>
+    <color name="white_transparent">#99FFFFFF</color>
+    <color name="black">#000</color>
+    <color name="green">#64dd17</color>
+    <color name="yellow">#ffc400</color>
+    <color name="red">#d50000</color>
+    <color name="settingItemsColor">#42a5f5</color>
+
+
+    <color name="slide_3">#5ab55d</color>
+    <color name="slide_2">#fb9c25</color>
+
+
+</resources>

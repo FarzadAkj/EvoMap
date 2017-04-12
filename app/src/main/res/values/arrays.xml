@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="setting_array">
+        <item>Update frequency by time</item>
+        <item>Update frequency by distance</item>
+        <item>Notification setting</item>
+        <item>Logout</item>
+    </string-array>
+
+    <string-array name="setting_array_values">
+        <item>update_frequency_by_time</item>
+        <item>update_frequency_by_distance</item>
+        <item>notification_setting</item>
+        <item>logout</item>
+    </string-array>
+
+</resources>
