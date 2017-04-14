@@ -150,6 +150,8 @@ public class MapsActivity extends FragmentActivity implements
         programFab1.setButtonSize(FloatingActionButton.SIZE_MINI);
         programFab1.setLabelText(Constant.FLOATING_BTTN1);
         programFab1.setImageResource(R.drawable.ic_nav_item);
+        programFab1.setOnClickListener(this);
+
 
 
         FloatingActionButton programFab2 = (FloatingActionButton) findViewById(R.id.floating_bttn2);
