@@ -155,7 +155,7 @@ public class taxiDriverDB {
             cursor.moveToFirst();
             temp = cursor.getTaxiState();
 
-            state = state.concat(String.format("{ \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" \"%s\" : \"%s\" } ",
+            state = state.concat(String.format( "{ \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" \"%s\" : \"%s\" } ",
                     "Driver_ID", "123456",
                     Constant.DB_key_Longitude, temp.get(Constant.DB_key_Longitude),
                     Constant.DB_key_Latitude, temp.get(Constant.DB_key_Latitude),
