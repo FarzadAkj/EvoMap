@@ -33,7 +33,8 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
         String passWord = (String) params[1];
         if (mHttpConnectionManager.isOnline(appActivity.getApplicationContext()))
         {
-            mHttpConnectionManager.postDataHttpUrlConnection("test");
+            String tempAuth = "[{\"User_id\":"+userName+",\"User_Pass\":"+passWord+"}]";
+            mHttpConnectionManager.postDataHttpUrlConnection(tempAuth,Constant.LoginServerUrl);
         }
         return result;
 

@@ -3,7 +3,6 @@ package ir.evoteam.evomap;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.SystemClock;
-import android.util.Log;
 
 /**
  * Created by shahr on 4/12/2017.
@@ -30,11 +29,11 @@ public class AsyncSendData extends AsyncTask<Void, Void, Void> {
                 if (mHttpConnectionManager.isOnline(appContext)) {
                     String singleRowOfDb;
 
-                    singleRowOfDb = LocationServiceManager.mTaxiDriverDB.getTaxiStatesRowInJsonFormat();
-                    Log.i("SingleRowDB",singleRowOfDb);
-                    if (!singleRowOfDb.toLowerCase().contains("null"))
-                        mHttpConnectionManager.postDataHttpUrlConnection(singleRowOfDb);
-                    SystemClock.sleep(50);
+                    singleRowOfDb = taxiDriverDB.getTaxiDriverDBInstance(appContext).getTaxiStatesRowInJsonFormat();
+//                    Log.i("SingleRowDB",singleRowOfDb);
+//                    if (singleRowOfDb!= null && !singleRowOfDb.toLowerCase().contains("null"))
+                        mHttpConnectionManager.postDataHttpUrlConnection(Constant.PositionServerUrl,singleRowOfDb+" ");
+                    SystemClock.sleep(5000);
                     run();
                 }
 

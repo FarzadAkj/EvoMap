@@ -68,7 +68,7 @@ public class LocationServiceManager extends Context implements android.location.
     public LocationServiceManager(Context applicationContext, Activity activity) {
         this.applicationContext = applicationContext;
         appActivity = activity;
-        mTaxiDriverDB = new taxiDriverDB(applicationContext);
+        mTaxiDriverDB = taxiDriverDB.getTaxiDriverDBInstance(activity.getApplicationContext());
         GpsDevicestatusCheck();
         checkpermisson();
     }

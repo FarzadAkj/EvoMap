@@ -77,8 +77,8 @@ public class MapsActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         //Start Sending Data
-//        AsyncSendData mSendDataAsyncTask = new AsyncSendData(getApplicationContext());
-//        mSendDataAsyncTask.execute();
+        AsyncSendData mSendDataAsyncTask = new AsyncSendData(getApplicationContext());
+        mSendDataAsyncTask.execute();
 
         loadTutorial();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -107,7 +107,7 @@ public class MapsActivity extends FragmentActivity implements
         SettingImgBttn = (ImageButton) findViewById(R.id.settingImgBttn);
         MoveToMyLocationImgBttn = (ImageButton) findViewById(R.id.myLocBttn);
 
-
+        Log.i("Context Ready : ",getApplicationContext()+ "is null ? ");
         locationServiceManager =
                 new LocationServiceManager(getApplicationContext(), MapsActivity.this);
 
@@ -176,7 +176,8 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+//        locationServiceManager =
+//                new LocationServiceManager(getApplicationContext(), MapsActivity.this);
         Log.d("GhMap_debug", "onMapReady");
 
         mMap.setOnMapClickListener(this);
@@ -202,7 +203,7 @@ public class MapsActivity extends FragmentActivity implements
 
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
-        addDBmarkers(LocationServiceManager.mTaxiDriverDB);
+        addDBmarkers(taxiDriverDB.getTaxiDriverDBInstance(getApplicationContext()));
 
         Log.d("GhMap_debug", "add marker");
 

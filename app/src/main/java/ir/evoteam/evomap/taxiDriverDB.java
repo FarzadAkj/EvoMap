@@ -2,6 +2,7 @@ package ir.evoteam.evomap;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,9 +18,20 @@ import ir.evoteam.evomap.taxiDriverSchema.marksTable;
  */
 
 public class taxiDriverDB {
-    private Context mContext ;
-    private SQLiteDatabase mDatabase ;
+    private static Context mContext ;
+    private static  SQLiteDatabase mDatabase ;
+   private static taxiDriverDB taxiDriverDBInstance = new taxiDriverDB();
 
+    private taxiDriverDB()
+    {
+
+    }
+    public static taxiDriverDB getTaxiDriverDBInstance(Context context)
+    {
+        mContext  = context;
+        mDatabase = new taxiTableHelper(mContext).getWritableDatabase() ;
+        return taxiDriverDBInstance;
+    }
 //    private static final String cordinateY = "Latitude" ;
 //    private static final String cordinateX = "Longtitude" ;
 //    private static final String DateTime = "DateTime" ;
@@ -29,10 +41,10 @@ public class taxiDriverDB {
 //    private static final String driverState = "Driver_State" ;
 
 
-    public taxiDriverDB (Context context) {
-        mContext = context.getApplicationContext();
-        mDatabase = new taxiTableHelper(mContext).getWritableDatabase() ;
-    }
+//    public taxiDriverDB (Context context) {
+//        mContext = context.getApplicationContext();
+//        mDatabase = new taxiTableHelper(mContext).getWritableDatabase() ;
+//    }
 
     private static ContentValues getDriverStatesValue (Bundle state) {
         ContentValues value = new ContentValues() ;
@@ -219,11 +231,18 @@ public class taxiDriverDB {
                     Constant.DB_key_DateTime, temp.get(Constant.DB_key_DateTime))
             );
 
-        } finally {
+            state = state.concat("]\"");
+            mDatabase.delete(driverStateTable.NAME , cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
+
+        }
+        catch (CursorIndexOutOfBoundsException e)
+        {
+            return null;
+        }
+
+        finally {
             cursor.close();
         }
-        state = state.concat("]\"");
-        mDatabase.delete(driverStateTable.NAME , cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
         return state ;
     }
 
