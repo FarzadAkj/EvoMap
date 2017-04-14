@@ -88,7 +88,7 @@ public class HttpConnectionManager {
 //
 //    }
 
-    public static int postDataHttpUrlConnection(String uri, String json) {
+    public static String postDataHttpUrlConnection(String uri, String json) {
         try {
 
             URL url = new URL(uri);
@@ -102,16 +102,19 @@ public class HttpConnectionManager {
             dStream.writeBytes(urlParameters);
             dStream.flush();
             dStream.close();
+            urlConnection.getResponseCode();
+            InputStream is = urlConnection.getInputStream();
+            String response = inputStreamToString(is);
 
-            return urlConnection.getResponseCode();
+            return response;
 
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
-            return 0;
+            return null;
         } catch (IOException e) {
             e.printStackTrace();
-            return 0;
+            return null;
         }
 
     }

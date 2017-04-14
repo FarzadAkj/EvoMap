@@ -3,6 +3,7 @@ package ir.evoteam.evomap;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -34,7 +35,11 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
         if (mHttpConnectionManager.isOnline(appActivity.getApplicationContext()))
         {
             String tempAuth = "[{\"User_id\":"+userName+",\"User_Pass\":"+passWord+"}]";
-            mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl,tempAuth);
+
+            String response = mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl,tempAuth);
+            if (response.equals("true"))
+                result = true;
+
         }
         return result;
 
@@ -88,6 +93,8 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
         {
             authProgressDialog.cancel();
             Toast.makeText(appActivity,appActivity.getString(R.string.authentication_success), Toast.LENGTH_LONG).show();
+            Intent startMapActivityIntent = new Intent(appActivity.getApplicationContext(), MapsActivity.class);
+            appActivity.startActivity(startMapActivityIntent);
             //start maps activity when authorized user
 //            Intent mapsIntent = new Intent(appActivity,//MapsActivty.class)
 //            appActivity.startActivity(mapsIntent);

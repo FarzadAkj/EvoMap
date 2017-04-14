@@ -1,9 +1,7 @@
 package ir.evoteam.evomap;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -31,9 +29,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import za.co.riggaroo.materialhelptutorial.TutorialItem;
-import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
 import static ir.evoteam.evomap.R.id.map;
 
@@ -80,7 +75,7 @@ public class MapsActivity extends FragmentActivity implements
         AsyncSendData mSendDataAsyncTask = new AsyncSendData(getApplicationContext());
         mSendDataAsyncTask.execute();
 
-        loadTutorial();
+//        loadTutorial();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
@@ -379,45 +374,4 @@ public class MapsActivity extends FragmentActivity implements
     }
 
 
-    public void loadTutorial() {
-        Intent mainAct = new Intent(this, MaterialTutorialActivity.class);
-        mainAct.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, getTutorialItems(this));
-        startActivityForResult(mainAct, REQUEST_CODE);
-
-    }
-
-    private ArrayList<TutorialItem> getTutorialItems(Context context) {
-//        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-//                R.color.slide_3, R.drawable.taxi2);
-//
-//        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
-//        tutorialItems.add(tutorialItem1);
-//        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-//                R.color.slide_3, R.drawable.taxi2  ,  R.drawable.taxi2);
-
-//        TutorialItem tutorialItem2 =new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-//                R.color.slide_3, R.drawable.taxi2  ,  R.drawable.taxi2);
-
-        TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.slide_1_Welcome), context.getString(
-                R.string.EvoMap),
-                R.color.slide_3, R.drawable.taxi2);
-
-        TutorialItem tutorialItem4 = new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-                R.color.slide_2, R.color.transparent  ,  R.drawable.taxi1);
-
-        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
-//        tutorialItems.add(tutorialItem1);
-//        tutorialItems.add(tutorialItem2);
-        tutorialItems.add(tutorialItem3);
-        tutorialItems.add(tutorialItem4);
-        return tutorialItems;
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //    super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE){
-            Toast.makeText(this, "Tutorial finished", Toast.LENGTH_LONG).show();
-
-        }
-    }
 }
