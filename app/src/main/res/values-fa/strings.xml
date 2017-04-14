@@ -19,4 +19,11 @@
     <string name="Log_Out">خروج از حساب کاربری</string>
     <string name="ETC">دیگر...</string>
 
+    <string name="FLOATING_BTTN1">در حال استراحت</string>
+    <string name="FLOATING_BTTN2">در حال سرویس</string>
+    <string name="FLOATING_BTTN3">در راه</string>
+    <string name="Driver_State">وضعیت راننده</string>
+
+
+
 </resources>

@@ -25,6 +25,12 @@
     <string name="Update_Distance">Update Distance</string>
     <string name="Log_Out">Log Out</string>
     <string name="ETC">etc...</string>
+    <string name="FLOATING_BTTN1">at Rest</string>
+    <string name="FLOATING_BTTN2">on Service</string>
+    <string name="FLOATING_BTTN3">on the Way</string>
+    <string name="Driver_State">Driver State</string>
+
+
 
 
 

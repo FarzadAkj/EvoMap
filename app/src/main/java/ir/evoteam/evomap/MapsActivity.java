@@ -141,6 +141,7 @@ public class MapsActivity extends FragmentActivity implements
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) findViewById(R.id.floating_menu);
 //        floatingActionMenu.getMenuIconView().setImageResource(R.mipmap.ic_launcher);
         floatingActionMenu.setClosedOnTouchOutside(true);
+        floatingActionMenu.setMenuButtonLabelText(getApplicationContext().getString(R.string.Driver_State));
 
 //        Drawable drawable = getResources().getDrawable(R.mipmap.ic_launcher);
 //        floatingActionMenu .setBackground(drawable);
@@ -148,7 +149,7 @@ public class MapsActivity extends FragmentActivity implements
 
         FloatingActionButton programFab1 = (FloatingActionButton) findViewById(R.id.floating_bttn1);
         programFab1.setButtonSize(FloatingActionButton.SIZE_MINI);
-        programFab1.setLabelText(Constant.FLOATING_BTTN1);
+        programFab1.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN1));
         programFab1.setImageResource(R.drawable.ic_nav_item);
          programFab1.setOnClickListener(this);
 
@@ -156,14 +157,14 @@ public class MapsActivity extends FragmentActivity implements
 
         FloatingActionButton programFab2 = (FloatingActionButton) findViewById(R.id.floating_bttn2);
         programFab2.setButtonSize(FloatingActionButton.SIZE_MINI);
-        programFab2.setLabelText(Constant.FLOATING_BTTN2);
+        programFab2.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN2));
         programFab2.setImageResource(R.drawable.ic_nav_item);
         programFab2.setOnClickListener(this);
 
 
         FloatingActionButton programFab3 = (FloatingActionButton) findViewById(R.id.floating_bttn3);
         programFab3.setButtonSize(FloatingActionButton.SIZE_MINI);
-        programFab3.setLabelText(Constant.FLOATING_BTTN3);
+        programFab3.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN3));
         programFab3.setImageResource(R.drawable.ic_nav_item);
         programFab3.setOnClickListener(this);
 
