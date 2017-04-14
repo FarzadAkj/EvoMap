@@ -31,8 +31,8 @@ public class AsyncSendData extends AsyncTask<Void, Void, Void> {
 
                     singleRowOfDb = taxiDriverDB.getTaxiDriverDBInstance(appContext).getTaxiStatesRowInJsonFormat();
 //                    Log.i("SingleRowDB",singleRowOfDb);
-//                    if (singleRowOfDb!= null && !singleRowOfDb.toLowerCase().contains("null"))
-                        mHttpConnectionManager.postDataHttpUrlConnection(Constant.PositionServerUrl,singleRowOfDb+" ");
+                    if (singleRowOfDb!= null && !singleRowOfDb.toLowerCase().contains("null"))
+                        mHttpConnectionManager.postDataHttpUrlConnection(Constant.PositionServerUrl,singleRowOfDb);
                     SystemClock.sleep(5000);
                     run();
                 }
