@@ -23,7 +23,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
     public AuthenticateAsync(Activity appActivity) {
         this.appActivity = appActivity;
         authProgressDialog = new ProgressDialog(appActivity);
-        mHttpConnectionManager = new HttpConnectionManager();
+        mHttpConnectionManager = new HttpConnectionManager("http://192.168.1.4:3000/api/login");
     }
 
     @Override
@@ -34,13 +34,15 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
         String passWord = (String) params[1];
         if (mHttpConnectionManager.isOnline(appActivity.getApplicationContext()))
         {
-            String tempAuth = "[{\"User_id\":"+userName+",\"User_Pass\":"+passWord+"}]";
+            String tempAuth = "[{\"User_id\":"+"\""+userName+"\""+",\"User_Pass\":"+"\""+passWord+"\""+"}]";
 
-            String response;
+            String response = "response";
              response = mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl,tempAuth);
             if (response.equals("true"))
                 result = true;
-            else
+            else if (response.equals("Password is incorrect"))
+                result = false;
+            else if(response.equals("Username not found"))
                 result = false;
 
         }
@@ -92,6 +94,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
         {
             Toast.makeText(appActivity,appActivity.getString(R.string.communication_problem), Toast.LENGTH_LONG).show();
             authProgressDialog.cancel();
+
         } else
         {
             authProgressDialog.cancel();

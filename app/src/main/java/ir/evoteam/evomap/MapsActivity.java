@@ -103,8 +103,8 @@ public class MapsActivity extends FragmentActivity implements
         MoveToMyLocationImgBttn = (ImageButton) findViewById(R.id.myLocBttn);
 
         Log.i("Context Ready : ",getApplicationContext()+ "is null ? ");
-        locationServiceManager =
-                new LocationServiceManager(getApplicationContext(), MapsActivity.this);
+//        locationServiceManager =
+//                new LocationServiceManager(getApplicationContext(), MapsActivity.this);
 
         Settings_list = new ArrayList<>();
         Settings_list.add(getApplicationContext().getString(R.string.Update_Time).toString());
@@ -174,8 +174,8 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-//        locationServiceManager =
-//                new LocationServiceManager(getApplicationContext(), MapsActivity.this);
+        locationServiceManager =
+                new LocationServiceManager(getApplicationContext(), MapsActivity.this);
         Log.d("GhMap_debug", "onMapReady");
 
         mMap.setOnMapClickListener(this);

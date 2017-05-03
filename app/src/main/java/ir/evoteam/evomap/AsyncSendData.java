@@ -15,7 +15,7 @@ public class AsyncSendData extends AsyncTask<Void, Void, Void> {
     private Context appContext;
 
     public AsyncSendData(Context context) {
-        mHttpConnectionManager = new HttpConnectionManager();
+        mHttpConnectionManager = new HttpConnectionManager("http://192.168.1.4:3000/api");
         appContext = context;
     }
 

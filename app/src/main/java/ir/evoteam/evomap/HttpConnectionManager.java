@@ -18,9 +18,12 @@ import java.net.URL;
 public class HttpConnectionManager {
 
     static  HttpURLConnection urlConnection = null;
-    static final String serverUrl = "http://192.168.1.4:3000/api";
+    static  String serverUrl = "http://192.168.1.4:3000/api";
 
-
+    public HttpConnectionManager (String serverUrl)
+    {
+        this.serverUrl = serverUrl;
+    }
     public static boolean isOnline(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();

@@ -1,36 +1,60 @@
 <resources>
-    <string name="app_name">EvoMap</string>
+    <!--<string name="app_name">EvoMap</string>-->
     <string name="title_activity_maps">EvoMap</string>
-    <string name="cordinateY">Latitude</string>
-    <string name="cordinateX">Longtitude</string>
-    <string name="DateTime">DateTime</string>
-    <string name="MarkCordY">Mark_Latitude</string>
-    <string name="MarkCordX">Mark_Longtitude</string>
-    <string name="MarkTitle">Mark_Title</string>
-    <string name="driverState">Driver_State</string>
-    <string name="user_name">Username</string>
-    <string name="Pass_word">Password</string>
-    <string name="login">LogIn</string>
-    <string name="exit">Exit</string>
-    <string name="exit_Message"> Are you sure you want to exit ?</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="communication_dialog">Connecting To Server</string>
-    <string name="communication_problem">Communication with Server Failed</string>
-    <string name="authentication_success">Authentication Successful</string>
-    <string name="GPS_OFF">Are you sure you want to turn GPS on ?</string>
-    <string name="slide_1_Welcome">Welcome To</string>
+    <!--<string name="cordinateY">Latitude</string>-->
+    <!--<string name="cordinateX">Longtitude</string>-->
+    <!--<string name="DateTime">DateTime</string>-->
+    <!--<string name="MarkCordY">Mark_Latitude</string>-->
+    <!--<string name="MarkCordX">Mark_Longtitude</string>-->
+    <!--<string name="MarkTitle">Mark_Title</string>-->
+    <!--<string name="driverState">Driver_State</string>-->
+    <!--<string name="user_name">Username</string>-->
+    <!--<string name="Pass_word">Password</string>-->
+    <!--<string name="login">LogIn</string>-->
+    <!--<string name="exit">Exit</string>-->
+    <!--<string name="exit_Message"> Are you sure you want to exit ?</string>-->
+    <!--<string name="yes">Yes</string>-->
+    <!--<string name="no">No</string>-->
+    <!--<string name="communication_dialog">Connecting To Server</string>-->
+    <!--<string name="communication_problem">Communication with Server Failed</string>-->
+    <!--<string name="authentication_success">Authentication Successful</string>-->
+    <!--<string name="GPS_OFF">Are you sure you want to turn GPS on ?</string>-->
+    <!--<string name="slide_1_Welcome">Welcome To</string>-->
+    <!--<string name="EvoMap">EvoMap</string>-->
+    <!--<string name="Update_Time">Update Time</string>-->
+    <!--<string name="Update_Distance">Update Distance</string>-->
+    <!--<string name="Log_Out">Log Out</string>-->
+    <!--<string name="ETC">etc...</string>-->
+    <!--<string name="FLOATING_BTTN1">at Rest</string>-->
+    <!--<string name="FLOATING_BTTN2">on Service</string>-->
+    <!--<string name="FLOATING_BTTN3">on the Way</string>-->
+    <!--<string name="Driver_State">Driver State</string>-->
+
+
+    <string name="app_name">مکان یاب</string>
+    <string name="user_name">نام کاربری</string>
+    <string name="Pass_word">کلمه عبور</string>
+    <string name="login">ورود</string>
+    <string name="exit">خروج</string>
+    <string name="exit_Message"> آیا مطمِن هستید که برنامه بسته شود ؟ </string>
+    <string name="yes"> بله </string>
+    <string name="no"> خیر</string>
+    <string name="communication_dialog">در حال برقراری ارتباط با سرور</string>
+    <string name="communication_problem">خطا در برقراری ارتباط با سرور</string>
+    <string name="authentication_success">دسترسی تایید شد</string>
+    <string name="GPS_OFF">به نظر میرسد gps دستگاه شما خاموش است آیا مایل به روشن کردن آن هستید؟</string>
+    <string name="slide_1_Welcome">خوش آمدید به</string>
     <string name="EvoMap">EvoMap</string>
-    <string name="Update_Time">Update Time</string>
-    <string name="Update_Distance">Update Distance</string>
-    <string name="Log_Out">Log Out</string>
-    <string name="ETC">etc...</string>
-    <string name="FLOATING_BTTN1">at Rest</string>
-    <string name="FLOATING_BTTN2">on Service</string>
-    <string name="FLOATING_BTTN3">on the Way</string>
-    <string name="Driver_State">Driver State</string>
 
+    <string name="Update_Time">فاصله زمانی به روزرسانی</string>
+    <string name="Update_Distance">فاصله مکانی به روزرسانی</string>
+    <string name="Log_Out">خروج از حساب کاربری</string>
+    <string name="ETC">دیگر...</string>
 
+    <string name="FLOATING_BTTN1">در حال استراحت</string>
+    <string name="FLOATING_BTTN2">در حال سرویس</string>
+    <string name="FLOATING_BTTN3">در راه</string>
+    <string name="Driver_State">وضعیت راننده</string>
 
 
 

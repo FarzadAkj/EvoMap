@@ -144,6 +144,8 @@ public class taxiDriverDB {
     private void deletemark () {
         mDatabase.delete(marksTable.NAME, null, null) ;
     }
+
+
     public String getTaxiStatesRow() {
         String state = new String("\"[");
 

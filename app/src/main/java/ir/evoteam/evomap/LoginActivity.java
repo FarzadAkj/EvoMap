@@ -54,7 +54,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.LogInButtonInLoginPage: {
+            case R.id.LogInButtonInLoginPage:
+            {
                 AuthenticateAsync authenticateAsync = new AuthenticateAsync(LoginActivity.this);
                 String temp1 = mUsernameEitText.getText().toString();
                 String temp2 = mPasswordEditText.getText().toString();
@@ -70,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         mPasswordEditText.startAnimation(shake);
                     }
                 }
+
             }
             break;
             case R.id.ExitButtonInLoginPage: {
