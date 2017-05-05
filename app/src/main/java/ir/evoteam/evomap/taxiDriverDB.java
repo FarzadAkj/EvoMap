@@ -236,8 +236,12 @@ public class taxiDriverDB {
             state = state.concat("]");
 
             //"[{"Driver_ID":4,"Longtitude":"null","Latitude":"null","Driver_State":null,"Date_time":"null"}]"
-            mDatabase.delete(driverStateTable.NAME , cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
-
+            //mDatabase.delete(driverStateTable.NAME , cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
+            cursor.moveToFirst() ;
+            while (!cursor.isAfterLast()) {
+                mDatabase.delete(driverStateTable.NAME, cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude), null);
+                cursor.moveToNext() ;
+            }
         }
         catch (CursorIndexOutOfBoundsException e)
         {

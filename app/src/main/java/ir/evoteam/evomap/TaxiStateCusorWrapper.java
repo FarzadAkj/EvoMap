@@ -28,7 +28,7 @@ public class TaxiStateCusorWrapper extends CursorWrapper {
         Bundle data = new Bundle() ;
         data.putString(Constant.DB_key_Driver_State , state);
         data.putString(Constant.DB_key_Longitude , cordinateX);
-        data.putString(Constant.DB_key_Mark_Latitude , cordinateY);
+        data.putString(Constant.DB_key_Latitude , cordinateY);
         data.putString(Constant.DB_key_DateTime , dateTime);
 
         return data ;
