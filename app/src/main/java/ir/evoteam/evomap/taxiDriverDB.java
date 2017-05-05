@@ -227,13 +227,15 @@ public class taxiDriverDB {
 
             state = state.concat(String.format("{ \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" ,\"%s\" : \"%s\" } ",
                     "Driver_ID", "2",
-                    Constant.DB_key_Longitude, temp.get(Constant.DB_key_Longitude),
-                    Constant.DB_key_Latitude, temp.get(Constant.DB_key_Latitude),
-                    Constant.DB_key_Driver_State, temp.get(Constant.DB_key_Driver_State),
-                    Constant.DB_key_DateTime, temp.get(Constant.DB_key_DateTime))
+                    "Longtitude", temp.get(Constant.DB_key_Longitude),
+                    "Latitude", temp.get(Constant.DB_key_Latitude),
+                    "Driver_State", temp.get(Constant.DB_key_Driver_State),
+                    "Date_time", temp.get(Constant.DB_key_DateTime))
             );
 
             state = state.concat("]");
+
+            //"[{"Driver_ID":4,"Longtitude":"null","Latitude":"null","Driver_State":null,"Date_time":"null"}]"
             mDatabase.delete(driverStateTable.NAME , cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
 
         }
