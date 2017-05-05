@@ -40,9 +40,9 @@ public class Constant {
     public static final String DB_key_Mark_Title = "Mark_Title_DB_key" ;
     public static final String DB_key_Driver_State = "Driver_State_DB_key" ;
 
-    public static final String PositionServerUrl = "http://192.168.1.4:3000/api";
-    public static final String LoginServerUrl = "http://192.168.1.4:3000/api/login";
-    public static final String MarksServerUrl = "http://192.168.1.4:3000/api/insert/tag";
+    public static final String PositionServerUrl = "http://198.143.181.24:3000/api";
+    public static final String LoginServerUrl =    "http://198.143.181.24:3000/api/login";
+    public static final String MarksServerUrl =    "http://198.143.181.24:3000/api/insert/tag";
 
 
 

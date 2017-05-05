@@ -38,7 +38,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
 
             String response = "response";
              response = mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl,tempAuth);
-            if (response.equals("true"))
+            if (!response.equals(null) && response.equals("true"))
                 result = true;
             else if (response.equals("Password is incorrect"))
                 result = false;

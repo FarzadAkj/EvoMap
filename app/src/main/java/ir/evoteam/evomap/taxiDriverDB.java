@@ -215,7 +215,7 @@ public class taxiDriverDB {
     }
 
     public String getTaxiStatesRowInJsonFormat() {
-        String state = new String("\"[");
+        String state = new String("[");
 
         TaxiStateCusorWrapper cursor = queryTaxiState(null, null);
 
@@ -225,15 +225,15 @@ public class taxiDriverDB {
             cursor.moveToFirst();
             temp = cursor.getTaxiState();
 
-            state = state.concat(String.format("{ \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" \"%s\" : \"%s\" } ",
-                    "Driver_ID", "123456",
+            state = state.concat(String.format("{ \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" ,\"%s\" : \"%s\" } ",
+                    "Driver_ID", "2",
                     Constant.DB_key_Longitude, temp.get(Constant.DB_key_Longitude),
                     Constant.DB_key_Latitude, temp.get(Constant.DB_key_Latitude),
                     Constant.DB_key_Driver_State, temp.get(Constant.DB_key_Driver_State),
                     Constant.DB_key_DateTime, temp.get(Constant.DB_key_DateTime))
             );
 
-            state = state.concat("]\"");
+            state = state.concat("]");
             mDatabase.delete(driverStateTable.NAME , cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
 
         }
