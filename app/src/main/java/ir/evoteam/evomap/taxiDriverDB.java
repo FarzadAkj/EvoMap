@@ -1,8 +1,10 @@
 package ir.evoteam.evomap;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
+import android.database.sqlite.SQLiteCantOpenDatabaseException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +14,8 @@ import java.util.List;
 
 import ir.evoteam.evomap.taxiDriverSchema.driverStateTable;
 import ir.evoteam.evomap.taxiDriverSchema.marksTable;
+
+import static ir.evoteam.evomap.MapsActivity.User_ID;
 
 /**
  * Created by programmer on 4/7/2017.
@@ -158,11 +162,11 @@ public class taxiDriverDB {
             temp = cursor.getTaxiState();
 
             state = state.concat(String.format( "{ \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" \"%s\" : \"%s\" } ",
-                    "Driver_ID", "123456",
-                    Constant.DB_key_Longitude, temp.get(Constant.DB_key_Longitude),
-                    Constant.DB_key_Latitude, temp.get(Constant.DB_key_Latitude),
-                    Constant.DB_key_Driver_State, temp.get(Constant.DB_key_Driver_State),
-                    Constant.DB_key_DateTime, temp.get(Constant.DB_key_DateTime))
+                    "Driver_ID", User_ID,
+                     "Longtitude"   , temp.get(Constant.DB_key_Longitude),
+                     "Latitude"     , temp.get(Constant.DB_key_Latitude),
+                     "Driver_State" , temp.get(Constant.DB_key_Driver_State),
+                     "Date_time"    , temp.get(Constant.DB_key_DateTime))
             );
 
         } finally {
@@ -185,11 +189,11 @@ public class taxiDriverDB {
             Bundle temp = cursor.getTaxiState();
 
             state = String.format("{ \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" \"%s\" : \"%s\" } ",
-                    "Driver_ID", "123456",
-                    Constant.DB_key_Longitude, temp.get(Constant.DB_key_Longitude),
-                    Constant.DB_key_Latitude, temp.get(Constant.DB_key_Latitude),
-                    Constant.DB_key_Driver_State, temp.get(Constant.DB_key_Driver_State),
-                    Constant.DB_key_DateTime, temp.get(Constant.DB_key_DateTime));
+                    "Driver_ID", User_ID,
+                     "Longtitude"       , temp.get(Constant.DB_key_Longitude),
+                     "Latitude"         , temp.get(Constant.DB_key_Latitude),
+                     "Driver_State"     , temp.get(Constant.DB_key_Driver_State),
+                     "Date_time"        , temp.get(Constant.DB_key_DateTime));
             cursor.moveToNext();
 
             states = states.concat(state);
@@ -198,11 +202,11 @@ public class taxiDriverDB {
                 state = new String();
                 temp = cursor.getTaxiState();
                 state = String.format(", { \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" \"%s\" : \"%s\" } ",
-                        "Driver_ID", "123456",
-                        Constant.DB_key_Longitude, temp.get(Constant.DB_key_Longitude),
-                        Constant.DB_key_Latitude, temp.get(Constant.DB_key_Latitude),
-                        Constant.DB_key_Driver_State, temp.get(Constant.DB_key_Driver_State),
-                        Constant.DB_key_DateTime, temp.get(Constant.DB_key_DateTime));
+                        "Driver_ID", User_ID,
+                         "Longtitude"     , temp.get(Constant.DB_key_Longitude),
+                         "Latitude"       , temp.get(Constant.DB_key_Latitude),
+                         "Driver_State"   , temp.get(Constant.DB_key_Driver_State),
+                         "Date_time"      , temp.get(Constant.DB_key_DateTime));
                 states = states.concat(state);
                 cursor.moveToNext();
             }
@@ -226,11 +230,11 @@ public class taxiDriverDB {
             temp = cursor.getTaxiState();
 
             state = state.concat(String.format("{ \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" , \"%s\" : \"%s\" ,\"%s\" : \"%s\" } ",
-                    "Driver_ID", "2",
-                    "Longtitude", temp.get(Constant.DB_key_Longitude),
-                    "Latitude", temp.get(Constant.DB_key_Latitude),
-                    "Driver_State", temp.get(Constant.DB_key_Driver_State),
-                    "Date_time", temp.get(Constant.DB_key_DateTime))
+                    "Driver_ID", User_ID,
+                    "Longtitude"    , temp.get(Constant.DB_key_Longitude),
+                    "Latitude"      , temp.get(Constant.DB_key_Latitude),
+                    "Driver_State"  , temp.get(Constant.DB_key_Driver_State),
+                    "Date_time"     , temp.get(Constant.DB_key_DateTime))
             );
 
             state = state.concat("]");
@@ -238,12 +242,17 @@ public class taxiDriverDB {
             //"[{"Driver_ID":4,"Longtitude":"null","Latitude":"null","Driver_State":null,"Date_time":"null"}]"
             //mDatabase.delete(driverStateTable.NAME , cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude) , null) ;
             cursor.moveToFirst() ;
-            while (!cursor.isAfterLast()) {
-                mDatabase.delete(driverStateTable.NAME, cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude), null);
-                cursor.moveToNext() ;
-            }
+//            while (!cursor.isAfterLast()) {
+//                mDatabase.delete(driverStateTable.NAME, cursor.getTaxiState().getString(Constant.DB_key_Longitude) + "=" + temp.getString(Constant.DB_key_Longitude), null);
+//                cursor.moveToNext() ;
+//            }
+            mDatabase.execSQL("delete from "+driverStateTable.NAME+" where "+"X"+"='"+temp.getString(Constant.DB_key_Longitude)+"'");
         }
         catch (CursorIndexOutOfBoundsException e)
+        {
+            return null;
+        }
+        catch (SQLiteCantOpenDatabaseException exception)
         {
             return null;
         }

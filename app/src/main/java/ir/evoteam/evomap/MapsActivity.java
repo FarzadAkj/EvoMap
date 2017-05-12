@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.facebook.stetho.Stetho;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.appindexing.Action;
@@ -54,7 +55,7 @@ public class MapsActivity extends FragmentActivity implements
     private ImageButton SettingImgBttn;
     private ImageButton MoveToMyLocationImgBttn;
     public static List<String> Settings_list;
-    public static String User_ID = Constant.DEFAULT_USER_ID;
+    public static String User_ID ;
     public static boolean isLogedin;
 
 
@@ -69,6 +70,8 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //db tracker
+        Stetho.initializeWithDefaults(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         //Start Sending Data
@@ -172,8 +175,16 @@ public class MapsActivity extends FragmentActivity implements
     }//onCreate
 
     @Override
+    public void onBackPressed() {
+
+//        this.finish();
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        //disable direction button for marks
+        mMap.getUiSettings().setMapToolbarEnabled(false);
         locationServiceManager =
                 new LocationServiceManager(getApplicationContext(), MapsActivity.this);
         Log.d("GhMap_debug", "onMapReady");

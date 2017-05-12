@@ -5,7 +5,11 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
+
+import static ir.evoteam.evomap.MapsActivity.User_ID;
+import static ir.evoteam.evomap.MapsActivity.sharedPreferences;
 
 /**
  * Created by shahr on 3/29/2017.
@@ -32,18 +36,27 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
 //username and password
         String userName = (String) params[0];
         String passWord = (String) params[1];
-        if (mHttpConnectionManager.isOnline(appActivity.getApplicationContext()))
-        {
-            String tempAuth = "[{\"User_id\":"+"\""+userName+"\""+",\"User_Pass\":"+"\""+passWord+"\""+"}]";
+        if (mHttpConnectionManager.isOnline(appActivity.getApplicationContext())) {
+            String tempAuth = "[{\"User_id\":" + "\"" + userName + "\"" + ",\"User_Pass\":" + "\"" + passWord + "\"" + "}]";
 
             String response = "response";
-             response = mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl,tempAuth);
-            if (!response.equals(null) && response.equals("true"))
+            response = mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl, tempAuth);
+            if (response != null && response.equals("Password is incorrect"))
+                result = false;
+            else if (response != null && response.equals("Username not found"))
+                result = false;
+            else if (response != null) {
+                User_ID  = response;
                 result = true;
-            else if (response.equals("Password is incorrect"))
+                sharedPreferences = appActivity.getSharedPreferences
+                        (Constant.PREFERENCES_KEY, 0);
+                sharedPreferences.edit().putString(Constant.USER_ID_PREF_KEY,response).commit();
+
+
+            }
+                else
                 result = false;
-            else if(response.equals("Username not found"))
-                result = false;
+            Log.i("USerIDinAutenAsync", User_ID);
 
         }
         return result;
@@ -79,9 +92,6 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
     }
 
 
-
-
-
     @Override
     protected void onPreExecute() {
         authProgressDialog.setMessage(appActivity.getString(R.string.communication_dialog));
@@ -90,16 +100,18 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
-        if (result == false)
-        {
-            Toast.makeText(appActivity,appActivity.getString(R.string.communication_problem), Toast.LENGTH_LONG).show();
+        if (result == false) {
+            Toast.makeText(appActivity, appActivity.getString(R.string.communication_problem), Toast.LENGTH_LONG).show();
             authProgressDialog.cancel();
 
-        } else
-        {
+        } else {
+            sharedPreferences = appActivity.getSharedPreferences
+                    (Constant.PREFERENCES_KEY, 0);
+            sharedPreferences.edit().putBoolean(Constant.ISLOGEDIN_PREF_KEY , true).commit();
             authProgressDialog.cancel();
-            Toast.makeText(appActivity,appActivity.getString(R.string.authentication_success), Toast.LENGTH_LONG).show();
+            Toast.makeText(appActivity, appActivity.getString(R.string.authentication_success), Toast.LENGTH_LONG).show();
             Intent startMapActivityIntent = new Intent(appActivity.getApplicationContext(), MapsActivity.class);
+            startMapActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK) ;
             appActivity.startActivity(startMapActivityIntent);
             //start maps activity when authorized user
 //            Intent mapsIntent = new Intent(appActivity,//MapsActivty.class)

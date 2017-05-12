@@ -3,7 +3,6 @@ package ir.evoteam.evomap;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,20 +18,23 @@ import java.util.ArrayList;
 import za.co.riggaroo.materialhelptutorial.TutorialItem;
 import za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity;
 
+import static ir.evoteam.evomap.MapsActivity.sharedPreferences;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE = 1234;
     Button mLoginButton, mExitButton;
     EditText mUsernameEitText, mPasswordEditText;
-    SharedPreferences sp;
-    boolean isLogedIn = false;
+//    SharedPreferences sp;
+//    boolean isLogedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
-        SharedPreferences.Editor e = sp.edit();
-        e.putBoolean("IsLogIN",false);
+//        sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor e = sp.edit();
+//        e.putBoolean("IsLogIN",false);
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         mLoginButton = (Button) findViewById(R.id.LogInButtonInLoginPage);
         mExitButton = (Button) findViewById(R.id.ExitButtonInLoginPage);
@@ -40,12 +42,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mPasswordEditText = (EditText) findViewById(R.id.PassWordEditText);
         mLoginButton.setOnClickListener(this);
         mExitButton.setOnClickListener(this);
-
-        if (sp.getBoolean("IsLogIN",false))
+//        loadTutorial();
+        sharedPreferences = getSharedPreferences
+                (Constant.PREFERENCES_KEY, 0);
+       boolean isLogedin = sharedPreferences.getBoolean(Constant.ISLOGEDIN_PREF_KEY ,false);
+        if (!isLogedin)
         {
             loadTutorial();
-            e.putBoolean("IsLogIN",true);
 
+        }
+        else
+        {
+            startActivity(new Intent(LoginActivity.this,MapsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
         }
 
 
@@ -97,7 +105,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void loadTutorial() {
-        Intent mainAct = new Intent(this, MaterialTutorialActivity.class);
+        Intent mainAct = new Intent(LoginActivity.this
+                , MaterialTutorialActivity.class);
         mainAct.putParcelableArrayListExtra(MaterialTutorialActivity.MATERIAL_TUTORIAL_ARG_TUTORIAL_ITEMS, getTutorialItems(this));
         startActivityForResult(mainAct, REQUEST_CODE);
 

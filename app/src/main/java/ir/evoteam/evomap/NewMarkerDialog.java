@@ -64,7 +64,7 @@ public class NewMarkerDialog {
 
                 Log.d("GhMap_debug","ok bttn clicked");
 
-                String newTitle= newTitle_dialogEditTxt.getText().toString();
+                final String newTitle= newTitle_dialogEditTxt.getText().toString();
                 if (newTitle.equals(null)|| newTitle.equals("")){
                     Toast.makeText(activity,"Title can not be empty",Toast.LENGTH_LONG).show();
                 }
@@ -86,6 +86,18 @@ public class NewMarkerDialog {
                     markerBundle.putString(Constant.DB_key_Mark_Latitude , String.format("%f",latLng.latitude));
 
                     LocationServiceManager.mTaxiDriverDB.addMark(markerBundle);
+
+//                    Thread sendmark = new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                         HttpConnectionManager connectionManager = new HttpConnectionManager(Constant.MarksServerUrl);
+//                            String markASJson = "[{"+Constant.DB_key_Mark_Longitude +"\":\""+String.format("%f",latLng.longitude)+"\",\"" +
+//                                                     Constant.DB_key_Mark_Latitude  +"\":\""+String.format("%f",latLng.latitude )+"\",\"" +
+//                                                     Constant.DB_key_Mark_Title+"\":\""+newTitle+"\",\""+
+//                                                     "Date_time"+"\":\""+""+"}]";
+//                            connectionManager.postDataHttpUrlConnection(Constant.MarksServerUrl,)
+//                        }
+//                    });
 
                     dialog.dismiss();
                 }

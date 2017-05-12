@@ -44,8 +44,8 @@
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             </intent-filter>
         </activity>
-
-        <activity android:name=".LoginActivity" android:noHistory="true">
+<!--android:noHistory="true"-->
+        <activity android:name=".LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,7 +58,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name="za.co.riggaroo.materialhelptutorial.tutorial.MaterialTutorialActivity"
-                  android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+                  android:theme="@style/Theme.AppCompat.Light.NoActionBar" android:noHistory="true"/>
     </application>
 
 </manifest>
