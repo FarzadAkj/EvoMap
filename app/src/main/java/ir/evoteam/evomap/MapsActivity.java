@@ -149,7 +149,6 @@ public class MapsActivity extends FragmentActivity implements
         MoveToMyLocationImgBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 LatLng currentLatLng =
                         new LatLng(locationServiceManager.getlatitude(),
                                 locationServiceManager.getlongtitude());
