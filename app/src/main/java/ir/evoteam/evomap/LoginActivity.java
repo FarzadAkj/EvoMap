@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import net.alhazmy13.catcho.library.Catcho;
+
 import java.util.ArrayList;
 
 import za.co.riggaroo.materialhelptutorial.TutorialItem;
@@ -34,7 +36,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //        SharedPreferences.Editor e = sp.edit();
 //        e.putBoolean("IsLogIN",false);
         super.onCreate(savedInstanceState);
-
+        //crash reporting
+        Catcho.Builder(this)
+                .recipients("evomapteam@gmail.com")
+                .build();
         setContentView(R.layout.activity_login);
         mLoginButton = (Button) findViewById(R.id.LogInButtonInLoginPage);
         mExitButton = (Button) findViewById(R.id.ExitButtonInLoginPage);

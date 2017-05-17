@@ -35,5 +35,7 @@ dependencies {
     compile 'com.android.support:design:26.0.0-alpha1'
     //db tracker
     compile 'com.facebook.stetho:stetho:1.5.0'
+    //crash reporting
+    compile 'net.alhazmy13.catcho:library:1.1.0'
 
 }

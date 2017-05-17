@@ -29,6 +29,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import net.alhazmy13.catcho.library.Catcho;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +75,13 @@ public class MapsActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         //db tracker
         Stetho.initializeWithDefaults(this);
+
         super.onCreate(savedInstanceState);
+        //crash reporting
+        Catcho.Builder(this)
+                .recipients("evomapteam@gmail.com")
+                .build();
+
         setContentView(R.layout.activity_maps);
         //Start Sending Data
         AsyncSendData mSendDataAsyncTask = new AsyncSendData(getApplicationContext());
