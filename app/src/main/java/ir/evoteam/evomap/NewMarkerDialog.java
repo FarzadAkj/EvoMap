@@ -18,6 +18,12 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import static ir.evoteam.evomap.MapsActivity.sharedPreferences;
+
 /**
  * Created by root on 3/26/17.
  */
@@ -87,7 +93,23 @@ public class NewMarkerDialog {
 
                     LocationServiceManager.mTaxiDriverDB.addMark(markerBundle);
 
-
+                    Thread sendmark = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                         HttpConnectionManager connectionManager = new HttpConnectionManager(Constant.MarksServerUrl);
+                            DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
+                            String date = df.format(Calendar.getInstance().getTime());
+                            sharedPreferences = activity.getSharedPreferences
+                                    (Constant.PREFERENCES_KEY, 0);
+                            String userid= sharedPreferences.getString(Constant.USER_ID_PREF_KEY,Constant.DEFAULT_USER_ID);
+                            String markASJson = "[{\""+Constant.DB_key_Mark_Longitude +"\":\""+String.format("%f",latLng.longitude)+"\",\"" +
+                                                     Constant.DB_key_Mark_Latitude  +"\":\""+String.format("%f",latLng.latitude )+"\",\"" +
+                                                     Constant.DB_key_Mark_Title+"\":\""+newTitle+"\",\""+
+                                                     "Date_time"+"\":\""+date   +"\",\""+"User_id\":\""+userid +"\"}]";
+                            connectionManager.postDataHttpUrlConnection(Constant.MarksServerUrl,markASJson);
+                        }
+                    });
+                    sendmark.start();
 
                     dialog.dismiss();
                 }

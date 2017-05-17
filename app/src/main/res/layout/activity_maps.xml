@@ -8,14 +8,14 @@
 
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="ir.evoteam.ghmap.MapsActivity"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/map"
+              android:name="com.google.android.gms.maps.SupportMapFragment"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="ir.evoteam.ghmap.MapsActivity"
 
-        />
+    />
 
 
 
@@ -30,8 +30,31 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="12dp"
         android:layout_marginTop="13dp"
-   />
+    />
 
+
+    <ImageButton
+        android:id="@+id/myLocBttn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_my_location_black_24dp"
+        android:foregroundGravity="left|bottom"
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/settingImgBttn"
+        android:layout_alignStart="@+id/settingImgBttn"
+        android:contextClickable="false"
+        android:background="?attr/selectableItemBackgroundBorderless"
+    />
+
+    <TextView
+        android:text="Driver No#"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/driver_id_txtView"
+        android:textStyle="normal|bold"
+        android:textColor="@color/black"
+        android:layout_alignTop="@+id/DriverIDImgBttn"
+        android:layout_toEndOf="@+id/DriverIDImgBttn" />
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/floating_menu"
@@ -43,8 +66,6 @@
         fab:menu_fab_label="Driver State"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         fab:menu_colorPressed="@color/transparent"
         android:background="@color/transparent"
         fab:menu_colorNormal="@color/transparent"
@@ -52,7 +73,8 @@
         fab:menu_icon="@mipmap/taxi_icon"
         fab:menu_fab_size="normal"
 
-    >
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
 
 
@@ -86,27 +108,14 @@
     </com.github.clans.fab.FloatingActionMenu>
 
     <ImageButton
-        android:id="@+id/myLocBttn"
+        android:id="@+id/DriverIDImgBttn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_my_location_black_24dp"
-        android:foregroundGravity="left|bottom"
-        android:layout_marginTop="11dp"
-        android:layout_below="@+id/settingImgBttn"
-        android:layout_alignStart="@+id/settingImgBttn"
-        android:contextClickable="false"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        />
-
-    <TextView
-        android:text="Driver No#"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/myLocBttn"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="35dp"
-        android:id="@+id/driver_id_txtView"
-        android:textStyle="normal|bold"
-        android:textColor="@color/black" />
+        android:src="@drawable/ic_account_circle_black_24dp"
+        android:background="@color/transparent"
+        android:foregroundGravity="right|top"
+        android:layout_marginStart="12dp"
+        android:layout_alignTop="@+id/myLocBttn"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

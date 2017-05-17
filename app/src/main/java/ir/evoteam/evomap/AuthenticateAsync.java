@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,6 +23,8 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
     private boolean result = false;
     private final ProgressDialog authProgressDialog;
     private HttpConnectionManager mHttpConnectionManager;
+    String userName;
+    String passWord;
 //    private final String serverUrl = "http://192.168.1.3/auth.php";
 
     public AuthenticateAsync(Activity appActivity) {
@@ -34,8 +37,8 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
     protected Boolean doInBackground(Object... params) {
 
 //username and password
-        String userName = (String) params[0];
-        String passWord = (String) params[1];
+        userName = (String) params[0];
+        passWord = (String) params[1];
         if (mHttpConnectionManager.isOnline(appActivity.getApplicationContext())) {
             String tempAuth = "[{\"User_id\":" + "\"" + userName + "\"" + ",\"User_Pass\":" + "\"" + passWord + "\"" + "}]";
 
@@ -54,7 +57,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
 
 
             }
-                else
+            else
                 result = false;
             Log.i("USerIDinAutenAsync", User_ID);
 
@@ -108,6 +111,11 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
             sharedPreferences = appActivity.getSharedPreferences
                     (Constant.PREFERENCES_KEY, 0);
             sharedPreferences.edit().putBoolean(Constant.ISLOGEDIN_PREF_KEY , true).commit();
+
+            SharedPreferences.Editor editor = MapsActivity.sharedPreferences.edit();
+            editor.putString(Constant.USER_NAME_PREF_KEY, userName);
+            editor.commit();
+
             authProgressDialog.cancel();
             Toast.makeText(appActivity, appActivity.getString(R.string.authentication_success), Toast.LENGTH_LONG).show();
             Intent startMapActivityIntent = new Intent(appActivity.getApplicationContext(), MapsActivity.class);
@@ -156,3 +164,5 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
 //    }
 
 }
+
+

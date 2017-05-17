@@ -45,11 +45,10 @@ public class Constant {
     public static final String MarksServerUrl =    "http://198.143.181.24:3000/api/insert/tag";
 
 
-
-
-
-
-
-
+    public static final String CURRENT_ZOOM_PTEF_KEY = "current zoom preference";
+    public static final Float DEFAULT_ZOOM = 15f;
+    public static final String USER_NAME_PREF_KEY = "loged in user name";
+    public static final String DEFAULT_USER_NAME = "not set";
+//    public static final boolean DEFAULT_IS_LOGED_IN= false;
 
 }

@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
@@ -48,12 +49,16 @@ public class MapsActivity extends FragmentActivity implements
     public static List<ir.evoteam.evomap.Marker> MarkedLocationsList;
     public static String Update_time;
     public static String Update_distance;
+    public static String LOGED_IN_USER;
+    public static float Current_Zoom;
+    public static boolean IS_LOGED_IN;
     public static SharedPreferences sharedPreferences;
     public static GoogleMap mMap;
     public static LocationServiceManager locationServiceManager;
     public static double[] locations = new double[2];
     private ImageButton SettingImgBttn;
     private ImageButton MoveToMyLocationImgBttn;
+    private TextView DriverIDtxtView;
     public static List<String> Settings_list;
     public static String User_ID ;
     public static boolean isLogedin;
@@ -61,10 +66,6 @@ public class MapsActivity extends FragmentActivity implements
 
     public static int driverState;
 
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
     private GoogleApiClient client;
 
 
@@ -87,6 +88,12 @@ public class MapsActivity extends FragmentActivity implements
         sharedPreferences = getSharedPreferences
                 (Constant.PREFERENCES_KEY, 0);
 
+        LOGED_IN_USER = (sharedPreferences.getString
+                (Constant.USER_NAME_PREF_KEY , Constant.DEFAULT_USER_NAME));
+
+        Current_Zoom = (sharedPreferences.getFloat
+                (Constant.CURRENT_ZOOM_PTEF_KEY , Constant.DEFAULT_ZOOM));
+
         Update_distance = (sharedPreferences.getString
                 (Constant.UPDATE_DISTANCE_PREF_KEY, Constant.DEFAULT_UPDATE_DISTANCE));
 
@@ -104,6 +111,9 @@ public class MapsActivity extends FragmentActivity implements
 
         SettingImgBttn = (ImageButton) findViewById(R.id.settingImgBttn);
         MoveToMyLocationImgBttn = (ImageButton) findViewById(R.id.myLocBttn);
+        DriverIDtxtView = (TextView) findViewById(R.id.driver_id_txtView);
+        DriverIDtxtView.setText(sharedPreferences.getString(Constant.USER_NAME_PREF_KEY , "not set"));
+
 
         Log.i("Context Ready : ",getApplicationContext()+ "is null ? ");
 //        locationServiceManager =
@@ -154,7 +164,7 @@ public class MapsActivity extends FragmentActivity implements
         programFab1.setButtonSize(FloatingActionButton.SIZE_MINI);
         programFab1.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN1));
         programFab1.setImageResource(R.drawable.ic_nav_item);
-         programFab1.setOnClickListener(this);
+        programFab1.setOnClickListener(this);
 
 
 
@@ -216,6 +226,31 @@ public class MapsActivity extends FragmentActivity implements
 
         Log.d("GhMap_debug", "add marker");
 
+
+
+
+//        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+//            @Override
+//            public void onCameraIdle() {
+//
+//                float zoomLevel = mMap.getCameraPosition().zoom;
+//                Current_Zoom=zoomLevel;
+//
+//                SharedPreferences.Editor editor = MapsActivity.sharedPreferences.edit();
+//                editor.putFloat(Constant.CURRENT_ZOOM_PTEF_KEY, MapsActivity.Current_Zoom);
+//                editor.commit();
+//            }
+//        });
+
+
+        /*
+        mMap.setLatLngBoundsForCameraTarget(new LatLngBounds
+                (new LatLng(29.480779,52.639333), new LatLng(29.873518,52.336830)   ));
+
+        mMap.setMinZoomPreference(5);
+        mMap.setMaxZoomPreference(15);
+
+      */
 
     } //onMapReady
 
@@ -363,6 +398,9 @@ public class MapsActivity extends FragmentActivity implements
 
 
 
+
+
+
     public void addDBmarkers(taxiDriverDB taxiDriverDB)
 
     {
@@ -386,6 +424,5 @@ public class MapsActivity extends FragmentActivity implements
 
 
     }
-
 
 }
