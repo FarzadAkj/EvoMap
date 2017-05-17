@@ -33,7 +33,14 @@ public class taxiDriverDB {
     public static taxiDriverDB getTaxiDriverDBInstance(Context context)
     {
         mContext  = context;
-        mDatabase = new taxiTableHelper(mContext).getWritableDatabase() ;
+        try {
+            mDatabase = new taxiTableHelper(mContext).getWritableDatabase() ;
+
+        }
+        catch (SQLiteCantOpenDatabaseException e)
+        {
+
+        }
         return taxiDriverDBInstance;
     }
 //    private static final String cordinateY = "Latitude" ;
@@ -260,6 +267,7 @@ public class taxiDriverDB {
         finally {
             cursor.close();
         }
+        mDatabase.close();
         return state ;
     }
 
