@@ -1,11 +1,16 @@
 package ir.evoteam.evomap;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -70,9 +75,32 @@ public class MapsActivity extends FragmentActivity implements
 
     private GoogleApiClient client;
 
+    //Service For The Widget
+    public static WidgetService widgetService;
+    Boolean isBound;
+
+    //creating the connection
+    public ServiceConnection widgetConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            WidgetService.MyLocalBinder binder = (WidgetService.MyLocalBinder) service;
+            widgetService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Creating The Service
+        Intent i = new Intent(this, WidgetService.class);
+        bindService(i, widgetConnection, Context.BIND_AUTO_CREATE);
+
+
         //db tracker
         Stetho.initializeWithDefaults(this);
 
