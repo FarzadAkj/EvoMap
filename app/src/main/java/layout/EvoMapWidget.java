@@ -8,8 +8,6 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import java.util.Random;
-
 import ir.evoteam.evomap.MapsActivity;
 import ir.evoteam.evomap.R;
 
@@ -28,7 +26,6 @@ public class EvoMapWidget extends AppWidgetProvider {
 
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
-            String number = String.format(" MOSTAFA %03d", (new Random().nextInt(900) + 100));
 
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
                     R.layout.evo_map_widget);
