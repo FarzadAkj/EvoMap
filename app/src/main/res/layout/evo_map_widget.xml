@@ -4,7 +4,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/taxi-background"
+              android:background="@drawable/taxi_background"
               android:orientation="vertical"
               android:padding="8dp"
               android:weightSum="1">
@@ -77,7 +77,7 @@
             android:layout_height="74dp"
             android:gravity="left"
             android:text="plz choose your state"
-            android:textColor="ffa200"
+            android:textColor="#ffa200"
             android:textSize="24sp"
             android:textStyle="normal|bold"
             tools:gravity="center_vertical|center_horizontal"
