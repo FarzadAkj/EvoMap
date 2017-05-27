@@ -77,14 +77,29 @@ public class MapsActivity extends FragmentActivity implements
 
     //Service For The Widget
     public static WidgetService widgetService;
-    Boolean isBound;
+    public static Boolean isBound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //creating the connection
+        ServiceConnection widgetConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                WidgetService.MyLocalBinder binder = (WidgetService.MyLocalBinder) service;
+                widgetService = binder.getService();
+                isBound = true;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                isBound = false;
+            }
+        };//the service
+
         //Creating The Service
         Intent i = new Intent(this, WidgetService.class);
         bindService(i, widgetConnection, Context.BIND_AUTO_CREATE);
-
+        Log.d("service Connection", String.valueOf(isBound));
 
         //db tracker
         Stetho.initializeWithDefaults(this);
@@ -204,20 +219,7 @@ public class MapsActivity extends FragmentActivity implements
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }//onCreate
 
-    //creating the connection
-    public ServiceConnection widgetConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            WidgetService.MyLocalBinder binder = (WidgetService.MyLocalBinder) service;
-            widgetService = binder.getService();
-            isBound = true;
-        }
 
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            isBound = false;
-        }
-    };//the service
 
     @Override
     public void onBackPressed() {

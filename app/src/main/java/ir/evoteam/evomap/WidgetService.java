@@ -12,6 +12,7 @@ public class WidgetService extends Service {
     private final IBinder myBinder = new MyLocalBinder();//this object is the bridge between client and the service
 
     public WidgetService() {
+//        Log.d("im_in_widget_service_constructor", String.valueOf(MapsActivity.isBound));
     }
 
     @Override
@@ -25,9 +26,6 @@ public class WidgetService extends Service {
             return WidgetService.this;
         }
     }
-    //commit
-
-
 
     public void changeStatus(String s){
 
