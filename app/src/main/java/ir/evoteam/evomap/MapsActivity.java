@@ -79,21 +79,6 @@ public class MapsActivity extends FragmentActivity implements
     public static WidgetService widgetService;
     Boolean isBound;
 
-    //creating the connection
-    public ServiceConnection widgetConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            WidgetService.MyLocalBinder binder = (WidgetService.MyLocalBinder) service;
-            widgetService = binder.getService();
-            isBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            isBound = false;
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Creating The Service
@@ -218,6 +203,21 @@ public class MapsActivity extends FragmentActivity implements
 
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }//onCreate
+
+    //creating the connection
+    public ServiceConnection widgetConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            WidgetService.MyLocalBinder binder = (WidgetService.MyLocalBinder) service;
+            widgetService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };//the service
 
     @Override
     public void onBackPressed() {

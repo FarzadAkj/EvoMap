@@ -21,7 +21,7 @@ public class WidgetService extends Service {
 
     public class MyLocalBinder extends Binder {
 
-        public WidgetService getService(  ){
+        public WidgetService getService(){
             return WidgetService.this;
         }
     }
