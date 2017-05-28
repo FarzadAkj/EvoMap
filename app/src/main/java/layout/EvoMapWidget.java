@@ -3,18 +3,13 @@ package layout;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import ir.evoteam.evomap.R;
-import ir.evoteam.evomap.WidgetService;
 
-import static ir.evoteam.evomap.MapsActivity.isBound;
 import static ir.evoteam.evomap.MapsActivity.widgetService;
 
 /**
@@ -55,39 +50,27 @@ public class EvoMapWidget extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+        try {//exception handling
+            if (ReadyClick.equals(intent.getAction())) {
 
-        if (ReadyClick.equals(intent.getAction())) {
+                widgetService.changeStatus(ReadyClick);
+                Toast.makeText(context, "آماده برای سرویس دهی دوباره", Toast.LENGTH_SHORT).show();
 
-            widgetService.changeStatus(ReadyClick);
-            Toast.makeText(context, "آماده برای سرویس دهی دوباره", Toast.LENGTH_SHORT).show();
+            } else if (OnWayClick.equals(intent.getAction())) {
+                widgetService.changeStatus(OnWayClick);
 
-        } else if (OnWayClick.equals(intent.getAction())) {
-            widgetService.changeStatus(OnWayClick);
+                Toast.makeText(context, "در مسیر سوار کردن مسافر", Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(context, "در مسیر سوار کردن مسافر", Toast.LENGTH_SHORT).show();
+            } else if (RestClick.equals(intent.getAction())) {
 
-        } else if (RestClick.equals(intent.getAction())) {
+                widgetService.changeStatus(RestClick);
+                Toast.makeText(context, "خارج از دسترس", Toast.LENGTH_SHORT).show();
 
-            widgetService.changeStatus(RestClick);
-            Toast.makeText(context, "خارج از دسترس", Toast.LENGTH_SHORT).show();
-
-        }
+            }
+        } catch (Exception e){
+            Toast.makeText(context, "لطفا ابتدا برنامه را اجرا کنید.", Toast.LENGTH_SHORT).show();
+        }//exception handling
     }
-
-    //creating the connection
-    public ServiceConnection widgetConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            WidgetService.MyLocalBinder binder = (WidgetService.MyLocalBinder) service;
-            widgetService = binder.getService();
-            isBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-            isBound = false;
-        }
-    };//the service
 
 }
 

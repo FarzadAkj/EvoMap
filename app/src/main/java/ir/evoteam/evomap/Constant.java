@@ -51,4 +51,8 @@ public class Constant {
     public static final String DEFAULT_USER_NAME = "not set";
 //    public static final boolean DEFAULT_IS_LOGED_IN= false;
 
+    public static final String WidgetOnWayClick = "onWay";
+    public static final String WidgetReadyClick = "ready";
+    public static final String WidgetRestClick = "resting";
+
 }
