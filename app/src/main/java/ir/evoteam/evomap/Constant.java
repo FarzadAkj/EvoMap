@@ -28,9 +28,9 @@ public class Constant {
     public static final String DEFAULT_USER_ID="user #";
     public static final String USER_ID_PREF_KEY="user id";
 
-    public static final int State_REST=0;
-    public static final int State_ONTHEWAY=1;
-    public static final int State_ONSERVICE=2;
+    public static final int State_REST=1;
+    public static final int State_ONTHEWAY=2;
+    public static final int State_ONSERVICE=3;
 
     public static final String DB_key_Latitude = "Latitude_DB_key" ;
     public static final String DB_key_Longitude = "Longitude_DB_key" ;

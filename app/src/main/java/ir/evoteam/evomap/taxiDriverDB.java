@@ -267,7 +267,7 @@ public class taxiDriverDB {
         finally {
             cursor.close();
         }
-        mDatabase.close();
+//        mDatabase.close();
         return state ;
     }
 
