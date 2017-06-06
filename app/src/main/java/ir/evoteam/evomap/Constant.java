@@ -17,7 +17,7 @@ public class Constant {
     public static final String DEFAULT_UPDATE_DISTANCE="10";
 
     public static final String FLOATING_BTTN1="at Rest";
-    public static final String FLOATING_BTTN2= "on Service";
+    public static final String FLOATING_BTTN2="on Service";
     public static final String FLOATING_BTTN3="on the Way";
 
 //    public static final String SETTING_ITEM1="Update time";
@@ -28,9 +28,9 @@ public class Constant {
     public static final String DEFAULT_USER_ID="user #";
     public static final String USER_ID_PREF_KEY="user id";
 
-    public static final int State_REST = 1;
-    public static final int State_ONTHEWAY = 2;
-    public static final int State_ONSERVICE  = 3;
+    public static final int State_REST=1;
+    public static final int State_ONTHEWAY=3;
+    public static final int State_ONSERVICE=2;
 
     public static final String DB_key_Latitude = "Latitude_DB_key" ;
     public static final String DB_key_Longitude = "Longitude_DB_key" ;
@@ -38,7 +38,7 @@ public class Constant {
     public static final String DB_key_Mark_Latitude = "Mark_Latitude_DB_key" ;
     public static final String DB_key_Mark_Longitude = "Mark_Longitude_DB_key" ;
     public static final String DB_key_Mark_Title = "Mark_Title_DB_key" ;
-    public static final String DB_key_Driver_State = "Driver_State_DB_key"  ;
+    public static final String DB_key_Driver_State = "Driver_State_DB_key" ;
 
     public static final String PositionServerUrl = "http://198.143.181.24:3000/api";
     public static final String LoginServerUrl =    "http://198.143.181.24:3000/api/login";
@@ -50,5 +50,9 @@ public class Constant {
     public static final String USER_NAME_PREF_KEY = "loged in user name";
     public static final String DEFAULT_USER_NAME = "not set";
 //    public static final boolean DEFAULT_IS_LOGED_IN= false;
+
+    public static final String WidgetOnWayClick = "onWay";
+    public static final String WidgetReadyClick = "ready";
+    public static final String WidgetRestClick = "resting";
 
 }

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/taxi_background"
+              android:orientation="vertical"
+              android:padding="8dp"
+              android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:background="#00ffffff"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#00ffffff"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:layout_weight="1.94">
+
+            <ImageButton
+                android:id="@+id/readyButton"
+                android:layout_width="0dp"
+                android:padding="6dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#41ffffff"
+                android:src="@drawable/ready"/>
+
+            <ImageButton
+                android:id="@+id/restButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:background="#41ffffff"
+                android:src="@drawable/resting"
+                android:layout_marginLeft="20dp" />
+
+            <ImageButton
+                android:id="@+id/onWayButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="6dp"
+                android:background="#41ffffff"
+                android:src="@drawable/on_way"
+                android:layout_marginLeft="20dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#41ffffff">
+
+        <ImageView
+            android:layout_width="77dp"
+            android:layout_height="68dp"
+            app:srcCompat="@drawable/taxi2"
+            android:layout_gravity="right"
+            />
+
+        <TextView
+            android:id="@+id/evoMapText"
+            android:layout_width="298dp"
+            android:layout_height="74dp"
+            android:gravity="left"
+            android:text="plz choose your state"
+            android:textColor="#ffa200"
+            android:textSize="24sp"
+            android:textStyle="normal|bold"
+            tools:gravity="center_vertical|center_horizontal"
+            >
+        </TextView>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

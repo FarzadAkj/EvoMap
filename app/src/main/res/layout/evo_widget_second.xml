@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/taxi2"
+              android:backgroundTintMode="multiply"
+              android:backgroundTint="@android:color/darker_gray"
+              android:orientation="vertical"
+              android:padding="8dp"
+              android:weightSum="1">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_gravity="center"
+        android:background="#00ffffff"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_weight="0.13">
+
+        <ImageButton
+            android:id="@+id/readyButton2"
+            android:layout_width="0dp"
+            android:padding="6dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#41ffffff"
+            android:src="@drawable/ready"/>
+
+        <ImageButton
+            android:id="@+id/restButton2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:background="#41ffffff"
+            android:src="@drawable/resting"/>
+
+        <ImageButton
+            android:id="@+id/onWayButton2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:background="#41ffffff"
+            android:src="@drawable/on_way"/>
+    </LinearLayout>
+</LinearLayout>
+
