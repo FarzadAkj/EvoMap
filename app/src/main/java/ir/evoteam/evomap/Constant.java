@@ -17,7 +17,7 @@ public class Constant {
     public static final String DEFAULT_UPDATE_DISTANCE="10";
 
     public static final String FLOATING_BTTN1="at Rest";
-    public static final String FLOATING_BTTN2="on Service";
+    public static final String FLOATING_BTTN2= "on Service";
     public static final String FLOATING_BTTN3="on the Way";
 
 //    public static final String SETTING_ITEM1="Update time";
