@@ -28,14 +28,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.1'
     testCompile 'junit:junit:4.12'
     compile 'com.github.clans:fab:1.6.4'
+    compile 'za.co.riggaroo:materialhelptutorial:1.+'
     compile 'com.google.android.gms:play-services:10.2.1'
     compile 'com.google.android.gms:play-services-maps:10.2.1'
     compile 'org.robolectric:shadows-multidex:3.3.2'
-    compile 'za.co.riggaroo:materialhelptutorial:1.+'
     compile 'com.android.support:design:26.0.0-alpha1'
     //db tracker
     compile 'com.facebook.stetho:stetho:1.5.0'
     //crash reporting
     compile 'net.alhazmy13.catcho:library:1.1.0'
-
 }

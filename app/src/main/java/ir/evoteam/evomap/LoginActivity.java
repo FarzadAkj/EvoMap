@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -73,7 +74,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String temp1 = mUsernameEitText.getText().toString();
                 String temp2 = mPasswordEditText.getText().toString();
                 if (!temp1.equals("") && !temp2.equals("")) {
-                    authenticateAsync.execute(temp1, temp2);
+                    Log.d("88888888888888888", "starting to send");
+                    try{
+                        authenticateAsync.execute(temp1, temp2);
+                        Log.d("8888888888888", "try");
+                    }catch(Exception e){
+                        Log.d("8888888888888", "catch");
+                        Toast.makeText(this, "dasdf", Toast.LENGTH_SHORT).show();
+                    }
 
                 }else {
                     Animation shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);
