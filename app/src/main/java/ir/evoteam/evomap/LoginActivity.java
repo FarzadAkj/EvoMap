@@ -73,7 +73,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 String temp1 = mUsernameEitText.getText().toString();
                 String temp2 = mPasswordEditText.getText().toString();
                 if (!temp1.equals("") && !temp2.equals("")) {
-                    authenticateAsync.execute(temp1, temp2);
+
+                    try{
+                        authenticateAsync.execute(temp1, temp2);
+
+                    }catch(Exception e){
+
+                        Toast.makeText(this, "dasdf", Toast.LENGTH_SHORT).show();
+                    }
 
                 }else {
                     Animation shake = AnimationUtils.loadAnimation(LoginActivity.this, R.anim.shake);

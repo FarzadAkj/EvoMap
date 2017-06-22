@@ -9,7 +9,8 @@
                 tools:context="ir.evoteam.evomap.LoginActivity"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
-                android:background="@drawable/fde4e0a929fb8d46812c6f1f3d26505b"
+
+
     >
 
     <EditText android:layout_width="match_parent"

@@ -156,17 +156,11 @@ public class MapsActivity extends FragmentActivity implements
 //                new LocationServiceManager(getApplicationContext(), MapsActivity.this);
 
         Settings_list = new ArrayList<>();
-        Settings_list.add(getApplicationContext().getString(R.string.Update_Time).toString());
-        Settings_list.add(getApplicationContext().getString(R.string.Update_Distance).toString());
         Settings_list.add(getApplicationContext().getString(R.string.Log_Out).toString());
-        Settings_list.add(getApplicationContext().getString(R.string.ETC).toString());
 
         SettingImgBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                Log.d("ghmap_debug", "Setting imgBttn clicked");
 
                 SettingsDialog settingsDialog = new SettingsDialog(MapsActivity.this);
                 settingsDialog.showDialog(MapsActivity.this);
@@ -219,7 +213,12 @@ public class MapsActivity extends FragmentActivity implements
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }//onCreate
 
-
+    private void check() {
+        Log.d("logedBefore",String.valueOf(isLogedin));
+        if (isLogedin == false){
+            MapsActivity.this.finish();
+        }
+    }
 
     @Override
     public void onBackPressed() {

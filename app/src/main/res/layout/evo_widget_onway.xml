@@ -18,7 +18,7 @@
         android:layout_weight="0.32"
         android:background="#96ffffff"
         android:layout_margin="8dp"
-        android:src="@drawable/ontheway"/>
+        android:src="@drawable/ontheway2"/>
 
     <ImageButton
         android:id="@+id/restButton2"
@@ -35,7 +35,6 @@
         android:layout_height="105dp"
         android:background="#96ffffff"
         android:layout_margin="8dp"
-        android:src="@drawable/done"
-        android:layout_weight="0.04"/>
+        android:src="@drawable/done"/>
         android:layout_weight="0.19"/>
 </LinearLayout>

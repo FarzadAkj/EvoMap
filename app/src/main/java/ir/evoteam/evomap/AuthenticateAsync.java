@@ -16,13 +16,14 @@ import static ir.evoteam.evomap.MapsActivity.sharedPreferences;
  * Created by shahr on 3/29/2017.
  */
 
-public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
+public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
 
 
     private Activity appActivity;
     private boolean result = false;
     private final ProgressDialog authProgressDialog;
     private HttpConnectionManager mHttpConnectionManager;
+    private String responseAfterAll;
     String userName;
     String passWord;
 //    private final String serverUrl = "http://192.168.1.3/auth.php";
@@ -34,7 +35,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
     }
 
     @Override
-    protected Boolean doInBackground(Object... params) {
+    protected String doInBackground(Object... params) {
 
 //username and password
         userName = (String) params[0];
@@ -42,12 +43,26 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
         if (mHttpConnectionManager.isOnline(appActivity.getApplicationContext())) {
             String tempAuth = "[{\"User_id\":" + "\"" + userName + "\"" + ",\"User_Pass\":" + "\"" + passWord + "\"" + "}]";
 
-            String response = "response";
+            String response ;
+
+
             response = mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl, tempAuth);
-            if (response != null && response.equals("Password is incorrect"))
+
+
+
+            if (response != null && response.equals("Password is incorrect")){
+                Log.d("888888888","not password");
                 result = false;
-            else if (response != null && response.equals("Username not found"))
+                responseAfterAll = "notUserOrPass";
+                return responseAfterAll;
+            }
+
+            else if (response != null && response.equals("Username not found")){
+
                 result = false;
+                responseAfterAll = "notUserOrPass";
+                return responseAfterAll;
+            }
             else if (response != null) {
                 User_ID  = response;
                 result = true;
@@ -59,10 +74,11 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
             }
             else
                 result = false;
-            Log.i("USerIDinAutenAsync", User_ID);
+
 
         }
-        return result;
+        responseAfterAll = "ok";
+        return responseAfterAll;
 
 //        try {
 
@@ -102,12 +118,13 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, Boolean> {
     }
 
     @Override
-    protected void onPostExecute(Boolean result) {
-        if (result == false) {
-            Toast.makeText(appActivity, appActivity.getString(R.string.communication_problem), Toast.LENGTH_LONG).show();
+    protected void onPostExecute(String result) {
+        if (result == "notUserOrPass") {
+            Toast.makeText(appActivity, "نام کاربری یا رمز عبور اشتباه وارد شده است.", Toast.LENGTH_LONG).show();
             authProgressDialog.cancel();
 
         } else {
+
             sharedPreferences = appActivity.getSharedPreferences
                     (Constant.PREFERENCES_KEY, 0);
             sharedPreferences.edit().putBoolean(Constant.ISLOGEDIN_PREF_KEY , true).commit();
