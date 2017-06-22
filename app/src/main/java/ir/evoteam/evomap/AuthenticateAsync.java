@@ -47,7 +47,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
 
 
             response = mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl, tempAuth);
-            Log.d("no net",response);
+
 
 
             if (response != null && response.equals("Password is incorrect")){
@@ -58,7 +58,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
             }
 
             else if (response != null && response.equals("Username not found")){
-                Log.d("888888888","not username");
+
                 result = false;
                 responseAfterAll = "notUserOrPass";
                 return responseAfterAll;
@@ -74,7 +74,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
             }
             else
                 result = false;
-            Log.i("USerIDinAutenAsync", User_ID);
+
 
         }
         responseAfterAll = "ok";
@@ -124,7 +124,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
             authProgressDialog.cancel();
 
         } else {
-            Log.d("8888888","onpost");
+
             sharedPreferences = appActivity.getSharedPreferences
                     (Constant.PREFERENCES_KEY, 0);
             sharedPreferences.edit().putBoolean(Constant.ISLOGEDIN_PREF_KEY , true).commit();
