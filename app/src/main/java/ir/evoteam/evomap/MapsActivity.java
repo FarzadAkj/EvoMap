@@ -165,8 +165,6 @@ public class MapsActivity extends FragmentActivity implements
                 SettingsDialog settingsDialog = new SettingsDialog(MapsActivity.this);
                 settingsDialog.showDialog(MapsActivity.this);
 
-                
-
             }
         });
 
