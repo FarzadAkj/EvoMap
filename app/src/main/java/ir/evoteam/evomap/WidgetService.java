@@ -29,28 +29,31 @@ public class WidgetService extends Service {
         }
     }
 
-    public void changeStatus(String s) throws Exception{
+    public void changeStatus(String s) /*throws Exception*/{
 
         int a;
         String TAG = "Mostafa" ;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         switch (s) {
-            case "onWay" :
+            case Constant.WidgetOnWayClick :
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_ONTHEWAY);
                 editor.commit();
                 a = (sharedPreferences.getInt(Constant.Driver_STATE_PREF_KEY , Constant.State_REST ));
+                MapsActivity.driverState = Constant.State_ONTHEWAY ;
                 Log.d(TAG, "changeStatus: " + a );
                 break ;
-            case "ready" :
+            case Constant.WidgetReadyClick :
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_ONSERVICE);
                 editor.commit();
                 a = (sharedPreferences.getInt(Constant.Driver_STATE_PREF_KEY , Constant.State_REST ));
+                MapsActivity.driverState = Constant.State_ONSERVICE ;
                 Log.d(TAG, "changeStatus: " + a );
                 break ;
-            case "resting" :
+            case Constant.WidgetRestClick :
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_REST);
                 editor.commit();
                 a = (sharedPreferences.getInt(Constant.Driver_STATE_PREF_KEY , Constant.State_REST ));
+                MapsActivity.driverState = Constant.State_REST ;
                 Log.d(TAG, "changeStatus: " + a );
                 break ;
             default:
@@ -58,5 +61,4 @@ public class WidgetService extends Service {
                 break ;
         }
     }
-
 }

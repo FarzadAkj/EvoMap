@@ -138,15 +138,12 @@ public class EvoMapWidget extends AppWidgetProvider {
             if (ReadyClick.equals(intent.getAction())) {
                 widgetService.changeStatus(ReadyClick);
                 Toast.makeText(context,  "  آماده برای سرویس دهی دوباره  ", Toast.LENGTH_SHORT).show();
-                RemoteViews remote = new RemoteViews(context.getPackageName() , R.layout.evo_widget_ready) ;
             } else if (OnWayClick.equals(intent.getAction())) {
                 widgetService.changeStatus(OnWayClick);
                 Toast.makeText(context, "در مسیر سوار کردن مسافر" , Toast.LENGTH_SHORT).show();
-                RemoteViews remote = new RemoteViews(context.getPackageName() , R.layout.evo_widget_onway) ;
             } else if (RestClick.equals(intent.getAction())) {
                 widgetService.changeStatus(RestClick);
                 Toast.makeText(context, "خارج از دسترس" , Toast.LENGTH_SHORT).show();
-                RemoteViews remote = new RemoteViews(context.getPackageName() , R.layout.evo_widget_rest) ;
             }
         } catch (Exception e){
             System.out.print (e.getStackTrace()) ;
