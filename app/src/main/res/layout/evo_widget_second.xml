@@ -12,23 +12,13 @@
 
 
     <ImageButton
-        android:id="@+id/readyButton2"
-        android:layout_width="match_parent"
-        android:layout_height="105dp"
-        android:background="#96ffffff"
-        android:layout_margin="8dp"
-        android:src="@drawable/done1"
-        android:layout_weight="0.04"/>
-        android:layout_weight="0.19"/>
-
-    <ImageButton
         android:id="@+id/onWayButton2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.32"
         android:background="#96ffffff"
         android:layout_margin="8dp"
-        android:src="@drawable/ontheway1"/>
+        android:src="@drawable/ontheway"/>
 
     <ImageButton
         android:id="@+id/restButton2"
@@ -37,7 +27,15 @@
         android:layout_weight="0.40"
         android:background="#96ffffff"
         android:layout_margin="8dp"
-        android:src="@drawable/rest1"/>
+        android:src="@drawable/rest"/>
 
-
+    <ImageButton
+        android:id="@+id/readyButton2"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:background="#96ffffff"
+        android:layout_margin="8dp"
+        android:src="@drawable/done"
+        android:layout_weight="0.04"/>
+        android:layout_weight="0.19"/>
 </LinearLayout>
