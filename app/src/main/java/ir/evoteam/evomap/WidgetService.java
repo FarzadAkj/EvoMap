@@ -31,27 +31,24 @@ public class WidgetService extends Service {
 
     public void changeStatus(String s) throws Exception{
 
-        int a;
+
         String TAG = "Mostafa" ;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         switch (s) {
             case "onWay" :
-                editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_ONTHEWAY);
-                editor.commit();
-                a = (sharedPreferences.getInt(Constant.Driver_STATE_PREF_KEY , Constant.State_REST ));
-                Log.d(TAG, "changeStatus: " + a );
-                break ;
-            case "ready" :
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_ONSERVICE);
                 editor.commit();
-                a = (sharedPreferences.getInt(Constant.Driver_STATE_PREF_KEY , Constant.State_REST ));
-                Log.d(TAG, "changeStatus: " + a );
+
+                break ;
+            case "ready" :
+                editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_ONTHEWAY);
+                editor.commit();
+
                 break ;
             case "resting" :
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_REST);
                 editor.commit();
-                a = (sharedPreferences.getInt(Constant.Driver_STATE_PREF_KEY , Constant.State_REST ));
-                Log.d(TAG, "changeStatus: " + a );
+
                 break ;
             default:
                 Log.d(TAG, "changeStatus: default");

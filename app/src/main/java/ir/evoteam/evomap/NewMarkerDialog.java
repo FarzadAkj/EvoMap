@@ -72,10 +72,10 @@ public class NewMarkerDialog {
 
                 final String newTitle= newTitle_dialogEditTxt.getText().toString();
                 if (newTitle.equals(null)|| newTitle.equals("")){
-                    Toast.makeText(activity,"Title can not be empty",Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity,"لطفا نامی برای این نشانه وارد کنید.",Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(activity,"Title is valid",Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity,"نشانه اضافه شد.",Toast.LENGTH_LONG).show();
 
                     MarkerOptions marker = new MarkerOptions().position(
                             new LatLng(latLng.latitude, latLng.longitude)).title(newTitle);

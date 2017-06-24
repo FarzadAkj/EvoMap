@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,6 +71,8 @@ public class MapsActivity extends FragmentActivity implements
     public static String User_ID ;
     public static boolean isLogedin;
 
+    public ImageView driverStateImageView ;
+
 
     public static int driverState;
 
@@ -81,6 +84,9 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         //creating the connection
         ServiceConnection widgetConnection = new ServiceConnection() {
             @Override
@@ -105,6 +111,7 @@ public class MapsActivity extends FragmentActivity implements
         Stetho.initializeWithDefaults(this);
 
         super.onCreate(savedInstanceState);
+
         //crash reporting
         Catcho.Builder(this)
                 .recipients("evomapteam@gmail.com")
@@ -179,6 +186,9 @@ public class MapsActivity extends FragmentActivity implements
             }
         });
 
+        driverStateImageView = (ImageView) findViewById(R.id.driverStateImageView);
+        setImageView();
+
 
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) findViewById(R.id.floating_menu);
 //        floatingActionMenu.getMenuIconView().setImageResource(R.mipmap.ic_launcher);
@@ -192,7 +202,7 @@ public class MapsActivity extends FragmentActivity implements
         FloatingActionButton programFab1 = (FloatingActionButton) findViewById(R.id.floating_bttn1);
         programFab1.setButtonSize(FloatingActionButton.SIZE_MINI);
         programFab1.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN1));
-        programFab1.setImageResource(R.drawable.ic_nav_item);
+        programFab1.setImageResource(R.drawable.ic_airline_seat_individual_suite_black_24dp);
         programFab1.setOnClickListener(this);
 
 
@@ -200,14 +210,14 @@ public class MapsActivity extends FragmentActivity implements
         FloatingActionButton programFab2 = (FloatingActionButton) findViewById(R.id.floating_bttn2);
         programFab2.setButtonSize(FloatingActionButton.SIZE_MINI);
         programFab2.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN2));
-        programFab2.setImageResource(R.drawable.ic_nav_item);
+        programFab2.setImageResource(R.drawable.ic_directions_black_24dp);
         programFab2.setOnClickListener(this);
 
 
         FloatingActionButton programFab3 = (FloatingActionButton) findViewById(R.id.floating_bttn3);
         programFab3.setButtonSize(FloatingActionButton.SIZE_MINI);
         programFab3.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN3));
-        programFab3.setImageResource(R.drawable.ic_nav_item);
+        programFab3.setImageResource(R.drawable.ic_done_black_24dp);
         programFab3.setOnClickListener(this);
 
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -290,6 +300,12 @@ public class MapsActivity extends FragmentActivity implements
 
     } //onMapReady
 
+    @Override
+    protected void onResume() {
+        setImageView();
+        super.onResume();
+
+    }
 
     @Override
     public void onMapClick(LatLng latLng) {
@@ -359,8 +375,11 @@ public class MapsActivity extends FragmentActivity implements
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_REST);
                 editor.commit();
 
-                Toast.makeText(MapsActivity.this, "driver state is "+MapsActivity.driverState
+                Toast.makeText(MapsActivity.this, "تغییر وضعیت راننده به : \"خارج از دسترس\""
                         , Toast.LENGTH_SHORT).show();
+                driverStateImageView.setImageResource(R.drawable.rest1background2);
+
+//                setImageView();
 
             }
             break;
@@ -374,8 +393,11 @@ public class MapsActivity extends FragmentActivity implements
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_ONSERVICE);
                 editor.commit();
 
-                Toast.makeText(MapsActivity.this, "driver state is "+MapsActivity.driverState
+                Toast.makeText(MapsActivity.this, "تغییر وضعیت راننده به : \"در حال سرویس دهی\""
                         , Toast.LENGTH_SHORT).show();
+                driverStateImageView.setImageResource(R.drawable.onway1background2);
+
+//                setImageView();
 
             }
             break;
@@ -389,8 +411,11 @@ public class MapsActivity extends FragmentActivity implements
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_ONTHEWAY);
                 editor.commit();
 
-                Toast.makeText(MapsActivity.this, "driver state is "+MapsActivity.driverState
+                Toast.makeText(MapsActivity.this, "تغییر وضعیت راننده به : \"آماده پذیرش سرویس جدید\""
                         , Toast.LENGTH_SHORT).show();
+                driverStateImageView.setImageResource(R.drawable.done1background2);
+
+//                setImageView();
             }
 
             break;
@@ -398,6 +423,28 @@ public class MapsActivity extends FragmentActivity implements
         }
 
     }// onClick floating menu
+
+    public void setImageView(){
+        int a = sharedPreferences.getInt(Constant.Driver_STATE_PREF_KEY,0);
+        switch (a){
+
+            case 1 :
+                driverStateImageView.setImageResource(R.drawable.rest1background2);
+                break;
+
+            case 2:
+                driverStateImageView.setImageResource(R.drawable.onway1background2);
+                break;
+
+            case 3:
+                driverStateImageView.setImageResource(R.drawable.done1background2);
+                break;
+
+            default:
+                break;
+        }
+
+    }
 
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
@@ -419,6 +466,8 @@ public class MapsActivity extends FragmentActivity implements
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
+        setImageView();
+
     }
 
     @Override
@@ -430,9 +479,6 @@ public class MapsActivity extends FragmentActivity implements
         AppIndex.AppIndexApi.end(client, getIndexApiAction());
         client.disconnect();
     }
-
-
-
 
 
 

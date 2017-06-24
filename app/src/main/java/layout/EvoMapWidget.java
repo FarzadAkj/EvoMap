@@ -137,11 +137,11 @@ public class EvoMapWidget extends AppWidgetProvider {
             Log.d("Mostafa", "onRecieve: In the fucking onRecieve");
             if (ReadyClick.equals(intent.getAction())) {
                 widgetService.changeStatus(ReadyClick);
-                Toast.makeText(context,  "  آماده برای سرویس دهی دوباره  ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,  "  آماده پذیرش سرویس جدید  ", Toast.LENGTH_SHORT).show();
                 RemoteViews remote = new RemoteViews(context.getPackageName() , R.layout.evo_widget_ready) ;
             } else if (OnWayClick.equals(intent.getAction())) {
                 widgetService.changeStatus(OnWayClick);
-                Toast.makeText(context, "در مسیر سوار کردن مسافر" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "در حال سرویس دهی" , Toast.LENGTH_SHORT).show();
                 RemoteViews remote = new RemoteViews(context.getPackageName() , R.layout.evo_widget_onway) ;
             } else if (RestClick.equals(intent.getAction())) {
                 widgetService.changeStatus(RestClick);
