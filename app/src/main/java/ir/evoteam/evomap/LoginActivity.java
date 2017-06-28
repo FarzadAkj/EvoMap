@@ -26,15 +26,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int REQUEST_CODE = 1234;
     Button mLoginButton, mExitButton;
     EditText mUsernameEitText, mPasswordEditText;
-//    SharedPreferences sp;
-//    boolean isLogedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-//        sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor e = sp.edit();
-//        e.putBoolean("IsLogIN",false);
         super.onCreate(savedInstanceState);
         //crash reporting
         Catcho.Builder(this)
@@ -125,16 +120,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private ArrayList<TutorialItem> getTutorialItems(Context context) {
-//        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-//                R.color.slide_3, R.drawable.taxi2);
-//
-//        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
-//        tutorialItems.add(tutorialItem1);
-//        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-//                R.color.slide_3, R.drawable.taxi2  ,  R.drawable.taxi2);
-
-//        TutorialItem tutorialItem2 =new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-//                R.color.slide_3, R.drawable.taxi2  ,  R.drawable.taxi2);
 
         TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.slide_1_Welcome), context.getString(
                 R.string.EvoMap),
@@ -144,8 +129,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 R.color.slide_2, R.color.transparent  ,  R.drawable.taxi1);
 
         ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
-//        tutorialItems.add(tutorialItem1);
-//        tutorialItems.add(tutorialItem2);
+
         tutorialItems.add(tutorialItem3);
         tutorialItems.add(tutorialItem4);
         return tutorialItems;

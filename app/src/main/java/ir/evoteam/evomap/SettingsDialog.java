@@ -33,7 +33,9 @@ public class SettingsDialog {
     private EditText updateTime_edittxt;
     private EditText updateDistance_edittxt;
 
-    public void showDialog(Activity activity) {
+    public void showDialog(final Activity activity) {
+
+
         SettingsDialog = new Dialog(activity);
         SettingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         SettingsDialog.setCancelable(false);
@@ -73,6 +75,7 @@ public class SettingsDialog {
                                                              editor.commit();
                                                              Intent intent = new Intent(context, LoginActivity.class);
                                                              context.startActivity(intent);
+                                                             activity.finish();
                                                          }
                                                      }
                                                  });
