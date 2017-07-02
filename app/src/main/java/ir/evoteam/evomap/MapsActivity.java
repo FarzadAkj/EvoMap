@@ -82,10 +82,11 @@ public class MapsActivity extends FragmentActivity implements
     public static WidgetService widgetService;
     public static Boolean isBound;
 
+    //version number
+    final static int VERSION = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
 
         //creating the connection
         ServiceConnection widgetConnection = new ServiceConnection() {
@@ -156,11 +157,6 @@ public class MapsActivity extends FragmentActivity implements
         MoveToMyLocationImgBttn = (ImageButton) findViewById(R.id.myLocBttn);
         DriverIDtxtView = (TextView) findViewById(R.id.driver_id_txtView);
         DriverIDtxtView.setText(sharedPreferences.getString(Constant.USER_NAME_PREF_KEY , "not set"));
-
-
-        Log.i("Context Ready : ",getApplicationContext()+ "is null ? ");
-//        locationServiceManager =
-//                new LocationServiceManager(getApplicationContext(), MapsActivity.this);
 
         Settings_list = new ArrayList<>();
         Settings_list.add(getApplicationContext().getString(R.string.Log_Out).toString());
@@ -314,7 +310,7 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        Log.d("GhMap_debug", "onMapLongClick");
+
 
         NewMarkerDialog newMarkerDialog = new NewMarkerDialog();
         newMarkerDialog.showDialog(latLng, this);

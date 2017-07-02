@@ -39,17 +39,13 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps">
             <intent-filter>
-
                 <action android:name="android.intent.action.MAIN"/>
-
             </intent-filter>
         </activity>
         <!-- android:noHistory="true" -->
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <!--
@@ -80,6 +76,16 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/evo_map_widget_info"/>
         </receiver>
+
+        <activity
+            android:name=".StartingActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

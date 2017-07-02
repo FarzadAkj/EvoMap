@@ -9,6 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +28,7 @@ import static ir.evoteam.evomap.MapsActivity.User_ID;
 public class taxiDriverDB {
     private static Context mContext ;
     private static  SQLiteDatabase mDatabase ;
-   private static taxiDriverDB taxiDriverDBInstance = new taxiDriverDB();
+    private static taxiDriverDB taxiDriverDBInstance = new taxiDriverDB();
 
     private taxiDriverDB()
     {
@@ -156,7 +160,6 @@ public class taxiDriverDB {
         mDatabase.delete(marksTable.NAME, null, null) ;
     }
 
-
     public String getTaxiStatesRow() {
         String state = new String("\"[");
 
@@ -269,6 +272,54 @@ public class taxiDriverDB {
         }
 //        mDatabase.close();
         return state ;
+    }
+
+    private int getTotalRowNumbers(){
+        TaxiStateCusorWrapper cursor = queryTaxiState(null, null);
+        int totalRow = 0;
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            totalRow ++;
+            cursor.moveToNext();
+        }
+        return totalRow;
+    }
+
+    public JSONArray sendJsonData(){
+
+        int total = getTotalRowNumbers();
+
+        JSONArray jsonArrayToSend = new JSONArray();
+
+        if(total >= 50){
+            TaxiStateCusorWrapper cursor = queryTaxiState(null, null);
+            cursor.moveToFirst();
+
+
+            while(!cursor.isAfterLast()){
+                Bundle temp = cursor.getTaxiState();
+
+                JSONObject tempJson = new JSONObject();
+
+                try {
+                    tempJson.put("Driver_ID"    ,  User_ID);
+                    tempJson.put("Longtitude"   ,  temp.get(Constant.DB_key_Longitude));
+                    tempJson.put("Latitude"     ,  temp.get(Constant.DB_key_Latitude));
+                    tempJson.put("Driver_State" ,  temp.get(Constant.DB_key_Driver_State));
+                    tempJson.put("Date_time"    ,  temp.get(Constant.DB_key_DateTime));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                jsonArrayToSend.put(tempJson);
+                cursor.moveToNext();
+
+            }
+            mDatabase.delete(taxiDriverSchema.driverStateTable.NAME, null, null);
+
+        }
+        return jsonArrayToSend;
+
     }
 
 }

@@ -78,13 +78,12 @@ public class LocationServiceManager extends Context implements android.location.
         Log.i("GhMap_debug", "Location changed");
         longitude = location.getLongitude();
         latitude = location.getLatitude();
-        DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
-        String date = df.format(Calendar.getInstance().getTime());
+        String date = System.currentTimeMillis()/1000 + "";
         Bundle temp = new Bundle();
         temp.putString(Constant.DB_key_Longitude,String.format("%f",longitude));
         temp.putString(Constant.DB_key_Latitude,String.format("%f",latitude));
         temp.putString(Constant.DB_key_Driver_State,String.format("%d",MapsActivity.driverState));
-        temp.putString(Constant.DB_key_DateTime,String.format("%s",date));
+        temp.putString(Constant.DB_key_DateTime,date);
         mTaxiDriverDB.addState(temp);
 
 //        Calendar calendar = new GregorianCalendar();

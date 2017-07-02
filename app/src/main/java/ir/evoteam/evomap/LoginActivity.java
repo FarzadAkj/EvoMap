@@ -30,11 +30,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         //crash reporting
         Catcho.Builder(this)
-                .recipients("evomapteam@gmail.com")
-                .build();
+            .recipients("evomapteam@gmail.com")
+            .build();
         setContentView(R.layout.activity_login);
         mLoginButton = (Button) findViewById(R.id.LogInButtonInLoginPage);
         mExitButton = (Button) findViewById(R.id.ExitButtonInLoginPage);
@@ -42,20 +43,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mPasswordEditText = (EditText) findViewById(R.id.PassWordEditText);
         mLoginButton.setOnClickListener(this);
         mExitButton.setOnClickListener(this);
-//        loadTutorial();
+
         sharedPreferences = getSharedPreferences
                 (Constant.PREFERENCES_KEY, 0);
-       boolean isLogedin = sharedPreferences.getBoolean(Constant.ISLOGEDIN_PREF_KEY ,false);
-        if (!isLogedin)
-        {
-            loadTutorial();
 
-        }
-        else
-        {
-            startActivity(new Intent(LoginActivity.this,MapsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-        }
 
+        loadTutorial();
 
     }
 
@@ -74,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     }catch(Exception e){
 
-                        Toast.makeText(this, "dasdf", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "خطا!", Toast.LENGTH_SHORT).show();
                     }
 
                 }else {
