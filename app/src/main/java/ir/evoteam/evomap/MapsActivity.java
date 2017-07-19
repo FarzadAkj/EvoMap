@@ -59,7 +59,6 @@ public class MapsActivity extends FragmentActivity implements
     public static String Update_distance;
     public static String LOGED_IN_USER;
     public static float Current_Zoom;
-    public static boolean IS_LOGED_IN;
     public static SharedPreferences sharedPreferences;
     public static GoogleMap mMap;
     public static LocationServiceManager locationServiceManager;
@@ -73,6 +72,8 @@ public class MapsActivity extends FragmentActivity implements
 
     public ImageView driverStateImageView ;
 
+    //for staying for 10 sec
+    public static double lastDataTime = System.currentTimeMillis();
 
     public static int driverState;
 
@@ -84,6 +85,10 @@ public class MapsActivity extends FragmentActivity implements
 
     //version number
     final static int VERSION = 1;
+    private HttpConnectionManager mHttpConnectionManager;
+
+    //**************
+    public static int remained = 23;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,13 +224,6 @@ public class MapsActivity extends FragmentActivity implements
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }//onCreate
 
-    private void check() {
-        Log.d("logedBefore",String.valueOf(isLogedin));
-        if (isLogedin == false){
-            MapsActivity.this.finish();
-        }
-    }
-
     @Override
     public void onBackPressed() {
 
@@ -239,7 +237,6 @@ public class MapsActivity extends FragmentActivity implements
         mMap.getUiSettings().setMapToolbarEnabled(false);
         locationServiceManager =
                 new LocationServiceManager(getApplicationContext(), MapsActivity.this);
-        Log.d("GhMap_debug", "onMapReady");
 
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
@@ -265,10 +262,6 @@ public class MapsActivity extends FragmentActivity implements
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         addDBmarkers(taxiDriverDB.getTaxiDriverDBInstance(getApplicationContext()));
-
-        Log.d("GhMap_debug", "add marker");
-
-
 
 
 //        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
@@ -306,6 +299,8 @@ public class MapsActivity extends FragmentActivity implements
     @Override
     public void onMapClick(LatLng latLng) {
         Log.d("GhMap_debug", "onMapClick");
+        taxiDriverDB s = new taxiDriverDB();
+        Log.d("GhMap_debug", String.valueOf(s.getTotalRowNumbers()));
     }
 
     @Override
@@ -476,16 +471,11 @@ public class MapsActivity extends FragmentActivity implements
         client.disconnect();
     }
 
-
-
-
-    public void addDBmarkers(taxiDriverDB taxiDriverDB)
-
-    {
+    public void addDBmarkers(taxiDriverDB taxiDriverDB) {
 
         List<Bundle> markers = new ArrayList<>();
-        Log.i("add markers","Invoked");
-        markers=taxiDriverDB.getTotalMarks();
+
+        markers = taxiDriverDB.getTotalMarks();
 
         for (int i = 0; i < markers.size(); i++) {
 

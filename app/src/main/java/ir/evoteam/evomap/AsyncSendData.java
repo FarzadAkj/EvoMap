@@ -17,6 +17,7 @@ public class AsyncSendData extends AsyncTask<Void, Void, Void> {
     public AsyncSendData(Context context) {
         mHttpConnectionManager = new HttpConnectionManager("http://192.168.1.4:3000/api");
         appContext = context;
+
     }
 
     @Override
@@ -26,14 +27,16 @@ public class AsyncSendData extends AsyncTask<Void, Void, Void> {
             @Override
             public void run() {
 
-                if (mHttpConnectionManager.isOnline(appContext)) {
+                int size = taxiDriverDB.getTaxiDriverDBInstance(appContext).getTotalRowNumbers();
+
+                if (mHttpConnectionManager.isOnline(appContext) && size != 0) {
                     String rowsOfDb;
 
                     rowsOfDb = taxiDriverDB.getTaxiDriverDBInstance(appContext).sendJsonData().toString();
 
-                    if (rowsOfDb!= null )
+                    if (rowsOfDb.length() != 0)
                         mHttpConnectionManager.postDataHttpUrlConnection(Constant.PositionServerUrl,rowsOfDb);
-                    SystemClock.sleep(100);
+                    SystemClock.sleep(10000);
                     run();
                 }
 
@@ -44,7 +47,7 @@ public class AsyncSendData extends AsyncTask<Void, Void, Void> {
         Thread sendDataThread = new Thread(sendDataRunnable);
         sendDataThread.start();
 
-
         return null;
     }
+
 }

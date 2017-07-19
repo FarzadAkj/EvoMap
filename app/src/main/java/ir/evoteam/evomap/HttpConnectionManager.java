@@ -6,10 +6,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,7 +30,7 @@ public class HttpConnectionManager {
         if (netInfo != null && netInfo.isConnected())
             return true;
         else
-            return false;
+            return false ;
     }
 
     public static String inputStreamToString(InputStream inputstream) {
@@ -67,18 +67,26 @@ public class HttpConnectionManager {
 
             URL url = new URL(uri);
             urlConnection = (HttpURLConnection) url.openConnection();
-
             String urlParameters = json;
 
+            urlConnection.setRequestMethod("POST");
             urlConnection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             urlConnection.setDoOutput(true);
-            DataOutputStream dStream = new DataOutputStream(urlConnection.getOutputStream());
-            dStream.writeBytes(urlParameters);
+            urlConnection.setDoInput(true);
+            urlConnection.setUseCaches(false);
+            urlConnection.setRequestProperty("Host", "android.schoolportal.gr");
+            urlConnection.connect();
+            urlConnection.setConnectTimeout(10000);
+            urlConnection.setReadTimeout(10000);
+//            DataOutputStream dStream = new DataOutputStream(urlConnection.getOutputStream());
+            OutputStreamWriter dStream = new OutputStreamWriter(
+                    urlConnection.getOutputStream(), "UTF-8");
+            dStream.write(urlParameters);
             dStream.flush();
             dStream.close();
-            urlConnection.getResponseCode();
             InputStream is = urlConnection.getInputStream();
             String response = inputStreamToString(is);
+
 
             return response;
 

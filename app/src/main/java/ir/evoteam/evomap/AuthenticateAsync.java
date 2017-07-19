@@ -9,6 +9,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import static ir.evoteam.evomap.MapsActivity.User_ID;
 import static ir.evoteam.evomap.MapsActivity.sharedPreferences;
 
@@ -41,13 +45,20 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
         userName = (String) params[0];
         passWord = (String) params[1];
         if (mHttpConnectionManager.isOnline(appActivity.getApplicationContext())) {
-            String tempAuth = "[{\"User_id\":" + "\"" + userName + "\"" + ",\"User_Pass\":" + "\"" + passWord + "\"" + "}]";
+            JSONArray tempArray = new JSONArray();
+            JSONObject tempAuth = new JSONObject();
+            try {
+                tempAuth.put("User_id", userName);
+                tempAuth.put("User_Pass", passWord);
+                tempArray.put(tempAuth);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
-            String response ;
+            String JsonToSend = tempArray.toString();
 
-
-            response = mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl, tempAuth);
-
+            String response = mHttpConnectionManager.postDataHttpUrlConnection(Constant.LoginServerUrl, JsonToSend);
+            Log.d("user********",response);
 
 
             if (response != null && response.equals("Password is incorrect")){
@@ -64,11 +75,14 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
                 return responseAfterAll;
             }
             else if (response != null) {
+                Log.d("user", "U are here");
                 User_ID  = response;
                 result = true;
                 sharedPreferences = appActivity.getSharedPreferences
                         (Constant.PREFERENCES_KEY, 0);
+                Log.d("user",response);
                 sharedPreferences.edit().putString(Constant.USER_ID_PREF_KEY,response).commit();
+                return "ok";
 
 
             }
@@ -77,37 +91,10 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
 
 
         }
-        responseAfterAll = "ok";
+        responseAfterAll = "notUserOrPass";
         return responseAfterAll;
 
-//        try {
 
-//            //openconnection with server
-//            URL url = new URL(serverUrl);
-//             urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setConnectTimeout(5000);
-//            urlConnection.setDoInput(true);
-//            urlConnection.setDoOutput(true);
-//            //check url security
-//            if (android.os.Build.VERSION.SDK_INT > 9) {
-//                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//                StrictMode.setThreadPolicy(policy);
-//            }
-////            sendData(urlConnection,userName,passWord);
-//            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-//                if (getResponseFromServer(urlConnection.getInputStream()).equals("\"ACCESS GRANTED\""))
-//                    result = true;
-//            }
-//        } catch (MalformedURLException e) {
-//            result = false;
-//        } catch (IOException e) {
-//            result = false;
-//        } catch (IllegalArgumentException e) {
-//            result = false;
-//        }
-////        finally {
-////            urlConnection.disconnect();
-//        }
     }
 
 
@@ -123,7 +110,7 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
             Toast.makeText(appActivity, "نام کاربری یا رمز عبور اشتباه وارد شده است.", Toast.LENGTH_LONG).show();
             authProgressDialog.cancel();
 
-        } else {
+        } else if (result == "ok") {
 
             sharedPreferences = appActivity.getSharedPreferences
                     (Constant.PREFERENCES_KEY, 0);
@@ -138,47 +125,9 @@ public class AuthenticateAsync extends AsyncTask<Object, Dialog, String> {
             Intent startMapActivityIntent = new Intent(appActivity.getApplicationContext(), MapsActivity.class);
             startMapActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK) ;
             appActivity.startActivity(startMapActivityIntent);
-            //start maps activity when authorized user
-//            Intent mapsIntent = new Intent(appActivity,//MapsActivty.class)
-//            appActivity.startActivity(mapsIntent);
 
         }
     }
-//
-//    public String getResponseFromServer(InputStream inputStreamparam) {
-//        InputStream inputStream = new BufferedInputStream(inputStreamparam);
-//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//
-//        String inputLine = "";
-//        StringBuffer temp = new StringBuffer();
-//        try {
-//            while ((inputLine = bufferedReader.readLine()) != null) {
-//                temp.append(inputLine);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return temp.toString();
-//    }
-//
-//    public void sendData(HttpURLConnection urlConnection,String user,String pass)
-//    {
-//        String temp  = user+"/"+pass;
-//        try {
-//            urlConnection.setRequestMethod("POST");
-//            urlConnection.setFixedLengthStreamingMode(temp.getBytes().length);
-//            urlConnection.setRequestProperty("Content-Type", "application/json;charset=utf-8");
-//            urlConnection.setRequestProperty("X-Requested-With", "XMLHttpRequest");
-//            urlConnection.connect();
-//            OutputStream os = new BufferedOutputStream(urlConnection.getOutputStream());
-//            os.write(temp.getBytes());
-//            os.flush();
-//        } catch (ProtocolException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 }
 

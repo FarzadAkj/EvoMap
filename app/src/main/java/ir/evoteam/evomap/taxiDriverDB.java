@@ -30,7 +30,7 @@ public class taxiDriverDB {
     private static  SQLiteDatabase mDatabase ;
     private static taxiDriverDB taxiDriverDBInstance = new taxiDriverDB();
 
-    private taxiDriverDB()
+    public taxiDriverDB()
     {
 
     }
@@ -63,10 +63,10 @@ public class taxiDriverDB {
 
     private static ContentValues getDriverStatesValue (Bundle state) {
         ContentValues value = new ContentValues() ;
+        value.put(driverStateTable.Cols.STATE , state.getString(Constant.DB_key_Driver_State));
         value.put(driverStateTable.Cols.CORDINATE_X , state.getString(Constant.DB_key_Longitude));
         value.put(driverStateTable.Cols.CORDINATE_Y , state.getString(Constant.DB_key_Latitude));
         value.put(driverStateTable.Cols.DATETIME , state.getString(Constant.DB_key_DateTime));
-        value.put(driverStateTable.Cols.STATE , state.getString(Constant.DB_key_Driver_State));
 
         return value ;
     }
@@ -274,7 +274,7 @@ public class taxiDriverDB {
         return state ;
     }
 
-    private int getTotalRowNumbers(){
+    public int getTotalRowNumbers(){
         TaxiStateCusorWrapper cursor = queryTaxiState(null, null);
         int totalRow = 0;
         cursor.moveToFirst();
@@ -287,39 +287,67 @@ public class taxiDriverDB {
 
     public JSONArray sendJsonData(){
 
+        int firstId = 0 ;
+        int secId = 0 ;
+
         int total = getTotalRowNumbers();
 
         JSONArray jsonArrayToSend = new JSONArray();
 
-        if(total >= 50){
-            TaxiStateCusorWrapper cursor = queryTaxiState(null, null);
-            cursor.moveToFirst();
+
+        TaxiStateCusorWrapper cursor = queryTaxiState(null, null);
+        cursor.moveToFirst();
+
+        JSONObject tempJson = new JSONObject();
+        if (total > 0) {
 
 
             while(!cursor.isAfterLast()){
                 Bundle temp = cursor.getTaxiState();
 
-                JSONObject tempJson = new JSONObject();
+                tempJson = new JSONObject();
 
                 try {
-                    tempJson.put("Driver_ID"    ,  User_ID);
-                    tempJson.put("Longtitude"   ,  temp.get(Constant.DB_key_Longitude));
-                    tempJson.put("Latitude"     ,  temp.get(Constant.DB_key_Latitude));
-                    tempJson.put("Driver_State" ,  temp.get(Constant.DB_key_Driver_State));
-                    tempJson.put("Date_time"    ,  temp.get(Constant.DB_key_DateTime));
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    tempJson.put("Driver_ID", User_ID);
+                    tempJson.put("Longtitude", temp.get(Constant.DB_key_Longitude));
+                    tempJson.put("Latitude", temp.get(Constant.DB_key_Latitude));
+                    tempJson.put("Driver_State", temp.get(Constant.DB_key_Driver_State));
+                    tempJson.put("Date_time", temp.get(Constant.DB_key_DateTime));
+
+                    if(temp.getInt("_id") < firstId)
+                        firstId = temp.getInt("_id");
+                    if(temp.getInt("_id") > secId)
+                        secId = temp.getInt("_id");
+
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
                 }
                 jsonArrayToSend.put(tempJson);
                 cursor.moveToNext();
 
             }
-            mDatabase.delete(taxiDriverSchema.driverStateTable.NAME, null, null);
+
+
+            int t = deleteDataBase(firstId, secId);
+            MapsActivity.remained = t;
 
         }
-        return jsonArrayToSend;
 
+            return jsonArrayToSend;
+    }
+
+
+
+    private int deleteDataBase(double firstId, double secId) {
+
+        mDatabase.delete(driverStateTable.NAME
+                , " _id" + " >= " + firstId + " and " +
+                        "_id" + " <= " + secId
+                , null);
+
+        int total = getTotalRowNumbers();
+        return total;
     }
 
 }

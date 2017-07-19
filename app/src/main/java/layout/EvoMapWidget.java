@@ -134,7 +134,7 @@ public class EvoMapWidget extends AppWidgetProvider {
 
         super.onReceive(context, intent) ;
         try {//exception handling
-            Log.d("Mostafa", "onRecieve: In the fucking onRecieve");
+
             if (ReadyClick.equals(intent.getAction())) {
                 widgetService.changeStatus(ReadyClick);
                 Toast.makeText(context,  "  آماده پذیرش سرویس جدید  ", Toast.LENGTH_SHORT).show();

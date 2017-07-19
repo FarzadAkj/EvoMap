@@ -59,7 +59,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             {
                 AuthenticateAsync authenticateAsync = new AuthenticateAsync(LoginActivity.this);
                 String temp1 = mUsernameEitText.getText().toString();
-                String temp2 = mPasswordEditText.getText().toString();
+                String temp2 = MD5(mPasswordEditText.getText().toString());
+                Toast.makeText(this, temp2, Toast.LENGTH_SHORT).show();
                 if (!temp1.equals("") && !temp2.equals("")) {
 
                     try{
@@ -136,6 +137,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    public String MD5(String md5) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+        }
+        return null;
+    }
 
 }
 
