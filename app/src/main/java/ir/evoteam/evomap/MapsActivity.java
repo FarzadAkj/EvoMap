@@ -296,7 +296,6 @@ public class MapsActivity extends FragmentActivity implements
         mMap.setMaxZoomPreference(15);
 
       */
-
     } //onMapReady
 
     @Override
