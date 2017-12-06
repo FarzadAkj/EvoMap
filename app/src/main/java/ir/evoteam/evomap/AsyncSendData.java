@@ -3,7 +3,6 @@ package ir.evoteam.evomap;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.SystemClock;
-import android.util.Log;
 
 /**
  * Created by shahr on 4/12/2017.
@@ -18,6 +17,7 @@ public class AsyncSendData extends AsyncTask<Void, Void, Void> {
     public AsyncSendData(Context context) {
         mHttpConnectionManager = new HttpConnectionManager("http://192.168.1.4:3000/api");
         appContext = context;
+
     }
 
     @Override
@@ -27,16 +27,16 @@ public class AsyncSendData extends AsyncTask<Void, Void, Void> {
             @Override
             public void run() {
 
-                if (mHttpConnectionManager.isOnline(appContext)) {
-                    String singleRowOfDb;
+                int size = taxiDriverDB.getTaxiDriverDBInstance(appContext).getTotalRowNumbers();
 
-                    singleRowOfDb = taxiDriverDB.getTaxiDriverDBInstance(appContext).getTaxiStatesRowInJsonFormat();
-                    if (singleRowOfDb!= null )
-                    Log.i("SingleRowDB",singleRowOfDb);
-                    //&& !singleRowOfDb.toLowerCase().contains("null")
-                    if (singleRowOfDb!= null )
-                        mHttpConnectionManager.postDataHttpUrlConnection(Constant.PositionServerUrl,singleRowOfDb);
-                    SystemClock.sleep(100);
+                if (mHttpConnectionManager.isOnline(appContext) && size != 0) {
+                    String rowsOfDb;
+
+                    rowsOfDb = taxiDriverDB.getTaxiDriverDBInstance(appContext).sendJsonData().toString();
+
+                    if (rowsOfDb.length() != 0)
+                        mHttpConnectionManager.postDataHttpUrlConnection(Constant.PositionServerUrl,rowsOfDb);
+                    SystemClock.sleep(10000);
                     run();
                 }
 
@@ -47,7 +47,7 @@ public class AsyncSendData extends AsyncTask<Void, Void, Void> {
         Thread sendDataThread = new Thread(sendDataRunnable);
         sendDataThread.start();
 
-
         return null;
     }
+
 }

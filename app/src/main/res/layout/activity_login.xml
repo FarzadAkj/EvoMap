@@ -9,6 +9,7 @@
                 tools:context="ir.evoteam.evomap.LoginActivity"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
+                android:scrollbars="vertical"
 
 
     >
@@ -17,6 +18,7 @@
               android:layout_height="wrap_content"
               android:hint="@string/user_name"
               android:id="@+id/UserNameEditText"
+              android:gravity="left"
               android:textColor="@color/yellow"
               android:textColorHint="@color/yellow"
               android:layout_alignBottom="@+id/PassWordEditText"
@@ -32,7 +34,8 @@
             android:layout_alignParentStart="true"/>
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:inputType="textPersonName"
+              android:inputType="textPassword"
+              android:gravity="left"
               android:hint="@string/Pass_word"
               android:id="@+id/PassWordEditText"
               android:textColor="@color/yellow"
@@ -52,4 +55,5 @@
             android:id="@+id/ExitButtonInLoginPage"
             android:layout_marginBottom="24dp"
             android:layout_alignParentBottom="true" android:layout_alignParentStart="true"/>
+
 </RelativeLayout>

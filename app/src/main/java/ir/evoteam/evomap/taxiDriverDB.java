@@ -9,6 +9,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +28,9 @@ import static ir.evoteam.evomap.MapsActivity.User_ID;
 public class taxiDriverDB {
     private static Context mContext ;
     private static  SQLiteDatabase mDatabase ;
-   private static taxiDriverDB taxiDriverDBInstance = new taxiDriverDB();
+    private static taxiDriverDB taxiDriverDBInstance = new taxiDriverDB();
 
-    private taxiDriverDB()
+    public taxiDriverDB()
     {
 
     }
@@ -59,10 +63,10 @@ public class taxiDriverDB {
 
     private static ContentValues getDriverStatesValue (Bundle state) {
         ContentValues value = new ContentValues() ;
+        value.put(driverStateTable.Cols.STATE , state.getString(Constant.DB_key_Driver_State));
         value.put(driverStateTable.Cols.CORDINATE_X , state.getString(Constant.DB_key_Longitude));
         value.put(driverStateTable.Cols.CORDINATE_Y , state.getString(Constant.DB_key_Latitude));
         value.put(driverStateTable.Cols.DATETIME , state.getString(Constant.DB_key_DateTime));
-        value.put(driverStateTable.Cols.STATE , state.getString(Constant.DB_key_Driver_State));
 
         return value ;
     }
@@ -155,7 +159,6 @@ public class taxiDriverDB {
     private void deletemark () {
         mDatabase.delete(marksTable.NAME, null, null) ;
     }
-
 
     public String getTaxiStatesRow() {
         String state = new String("\"[");
@@ -269,6 +272,82 @@ public class taxiDriverDB {
         }
 //        mDatabase.close();
         return state ;
+    }
+
+    public int getTotalRowNumbers(){
+        TaxiStateCusorWrapper cursor = queryTaxiState(null, null);
+        int totalRow = 0;
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            totalRow ++;
+            cursor.moveToNext();
+        }
+        return totalRow;
+    }
+
+    public JSONArray sendJsonData(){
+
+        int firstId = 0 ;
+        int secId = 0 ;
+
+        int total = getTotalRowNumbers();
+
+        JSONArray jsonArrayToSend = new JSONArray();
+
+
+        TaxiStateCusorWrapper cursor = queryTaxiState(null, null);
+        cursor.moveToFirst();
+
+        JSONObject tempJson = new JSONObject();
+        if (total > 0) {
+
+
+            while(!cursor.isAfterLast()){
+                Bundle temp = cursor.getTaxiState();
+
+                tempJson = new JSONObject();
+
+                try {
+
+                    tempJson.put("Driver_ID", User_ID);
+                    tempJson.put("Longtitude", temp.get(Constant.DB_key_Longitude));
+                    tempJson.put("Latitude", temp.get(Constant.DB_key_Latitude));
+                    tempJson.put("Driver_State", temp.get(Constant.DB_key_Driver_State));
+                    tempJson.put("Date_time", temp.get(Constant.DB_key_DateTime));
+
+                    if(temp.getInt("_id") < firstId)
+                        firstId = temp.getInt("_id");
+                    if(temp.getInt("_id") > secId)
+                        secId = temp.getInt("_id");
+
+                } catch (JSONException e1) {
+                    e1.printStackTrace();
+                }
+                jsonArrayToSend.put(tempJson);
+                cursor.moveToNext();
+
+            }
+
+
+            int t = deleteDataBase(firstId, secId);
+            MapsActivity.remained = t;
+
+        }
+
+            return jsonArrayToSend;
+    }
+
+
+
+    private int deleteDataBase(double firstId, double secId) {
+
+        mDatabase.delete(driverStateTable.NAME
+                , " _id" + " >= " + firstId + " and " +
+                        "_id" + " <= " + secId
+                , null);
+
+        int total = getTotalRowNumbers();
+        return total;
     }
 
 }

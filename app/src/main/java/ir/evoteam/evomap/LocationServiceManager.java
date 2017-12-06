@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.os.UserHandle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -62,8 +63,10 @@ public class LocationServiceManager extends Context implements android.location.
     private Context applicationContext;
     private Activity appActivity;
     public static taxiDriverDB mTaxiDriverDB;
-    double latitude = 29.631676;
-    double longitude = 52.519573;
+    public SharedPreferences editor =  MapsActivity.sharedPreferences;
+    double latitude = Double.parseDouble(editor.getString("latitude", "29.631676"));
+    double longitude = Double.parseDouble(editor.getString("longitude", "52.519573"));
+
 
     public LocationServiceManager(Context applicationContext, Activity activity) {
         this.applicationContext = applicationContext;
@@ -71,20 +74,31 @@ public class LocationServiceManager extends Context implements android.location.
         mTaxiDriverDB = taxiDriverDB.getTaxiDriverDBInstance(activity.getApplicationContext());
         GpsDevicestatusCheck();
         checkpermisson();
+
+        Thread saveDataIfStayedThread = new Thread(saveDataRunnable);
+        saveDataIfStayedThread.start();
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.i("GhMap_debug", "Location changed");
+
+
+
         longitude = location.getLongitude();
         latitude = location.getLatitude();
-        DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
-        String date = df.format(Calendar.getInstance().getTime());
+
+        editor.edit().putString("longitude", longitude + "").commit();
+        editor.edit().putString("latitude", latitude + "").commit();
+
+        String date = System.currentTimeMillis()/1000 + "";
         Bundle temp = new Bundle();
         temp.putString(Constant.DB_key_Longitude,String.format("%f",longitude));
         temp.putString(Constant.DB_key_Latitude,String.format("%f",latitude));
-        temp.putString(Constant.DB_key_Driver_State,String.format("%d",MapsActivity.driverState));
-        temp.putString(Constant.DB_key_DateTime,String.format("%s",date));
+        temp.putString(Constant.DB_key_Driver_State,String.format("%d",editor.getInt(Constant.Driver_STATE_PREF_KEY,0)));
+        temp.putString(Constant.DB_key_DateTime,date);
+        Log.d("testdb", temp.toString());
+        Log.d("testdb", String.valueOf(mTaxiDriverDB.getTotalRowNumbers()));
+        MapsActivity.lastDataTime = System.currentTimeMillis();
         mTaxiDriverDB.addState(temp);
 
 //        Calendar calendar = new GregorianCalendar();
@@ -99,9 +113,38 @@ public class LocationServiceManager extends Context implements android.location.
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15));
 
-
-
     }
+
+    Runnable saveDataRunnable = new Runnable() {
+        @Override
+        public void run() {
+            double lastDataTime = MapsActivity.lastDataTime;
+            double newTime = System.currentTimeMillis();
+
+            if(newTime - lastDataTime >= 10000.0){
+                SharedPreferences editor = MapsActivity.sharedPreferences;
+                String date = newTime/1000 + "";
+                Bundle temp = new Bundle();
+                temp.putString(Constant.DB_key_Longitude,String.format("%f",longitude));
+                temp.putString(Constant.DB_key_Latitude,String.format("%f",latitude));
+                temp.putString(Constant.DB_key_Driver_State,String.format("%d",editor.getInt(Constant.Driver_STATE_PREF_KEY,1)));
+                temp.putString(Constant.DB_key_DateTime,date);
+                MapsActivity.lastDataTime = System.currentTimeMillis();
+                mTaxiDriverDB.addState(temp);
+                editor.edit().putString("longitude", longitude + "").commit();
+                editor.edit().putString("latitude", latitude + "").commit();
+            }
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            run();
+        }
+    };
+
+
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -123,7 +166,7 @@ public class LocationServiceManager extends Context implements android.location.
         int permissionCheckresult = ContextCompat.checkSelfPermission(applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         if (permissionCheckresult != PackageManager.PERMISSION_GRANTED) {
-            Log.i("Not Granted", "Not Granted");
+
             ActivityCompat.requestPermissions(appActivity,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE},
                     mRequestPermissionCode);

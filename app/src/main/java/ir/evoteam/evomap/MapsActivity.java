@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +59,6 @@ public class MapsActivity extends FragmentActivity implements
     public static String Update_distance;
     public static String LOGED_IN_USER;
     public static float Current_Zoom;
-    public static boolean IS_LOGED_IN;
     public static SharedPreferences sharedPreferences;
     public static GoogleMap mMap;
     public static LocationServiceManager locationServiceManager;
@@ -69,7 +69,12 @@ public class MapsActivity extends FragmentActivity implements
     public static List<String> Settings_list;
     public static String User_ID ;
     public static boolean isLogedin;
+    private static ImageView evoteam;
 
+    public ImageView driverStateImageView ;
+
+    //for staying for 10 sec
+    public static double lastDataTime = System.currentTimeMillis();
 
     public static int driverState;
 
@@ -79,8 +84,16 @@ public class MapsActivity extends FragmentActivity implements
     public static WidgetService widgetService;
     public static Boolean isBound;
 
+    //version number
+    final static int VERSION = 1;
+    private HttpConnectionManager mHttpConnectionManager;
+
+    //**************
+    public static int remained = 23;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         //creating the connection
         ServiceConnection widgetConnection = new ServiceConnection() {
             @Override
@@ -96,6 +109,8 @@ public class MapsActivity extends FragmentActivity implements
             }
         };//the service
 
+
+
         //Creating The Service
         Intent i = new Intent(this, WidgetService.class);
         bindService(i, widgetConnection, Context.BIND_AUTO_CREATE);
@@ -105,6 +120,7 @@ public class MapsActivity extends FragmentActivity implements
         Stetho.initializeWithDefaults(this);
 
         super.onCreate(savedInstanceState);
+
         //crash reporting
         Catcho.Builder(this)
                 .recipients("evomapteam@gmail.com")
@@ -144,16 +160,11 @@ public class MapsActivity extends FragmentActivity implements
 
         isLogedin= (sharedPreferences.getBoolean(Constant.ISLOGEDIN_PREF_KEY , false));
 
-
+        evoteam = (ImageView) findViewById(R.id.evoteam);
         SettingImgBttn = (ImageButton) findViewById(R.id.settingImgBttn);
         MoveToMyLocationImgBttn = (ImageButton) findViewById(R.id.myLocBttn);
         DriverIDtxtView = (TextView) findViewById(R.id.driver_id_txtView);
         DriverIDtxtView.setText(sharedPreferences.getString(Constant.USER_NAME_PREF_KEY , "not set"));
-
-
-        Log.i("Context Ready : ",getApplicationContext()+ "is null ? ");
-//        locationServiceManager =
-//                new LocationServiceManager(getApplicationContext(), MapsActivity.this);
 
         Settings_list = new ArrayList<>();
         Settings_list.add(getApplicationContext().getString(R.string.Update_Time).toString());
@@ -185,6 +196,9 @@ public class MapsActivity extends FragmentActivity implements
             }
         });
 
+        driverStateImageView = (ImageView) findViewById(R.id.driverStateImageView);
+        setImageView();
+
 
         FloatingActionMenu floatingActionMenu = (FloatingActionMenu) findViewById(R.id.floating_menu);
 //        floatingActionMenu.getMenuIconView().setImageResource(R.mipmap.ic_launcher);
@@ -198,7 +212,7 @@ public class MapsActivity extends FragmentActivity implements
         FloatingActionButton programFab1 = (FloatingActionButton) findViewById(R.id.floating_bttn1);
         programFab1.setButtonSize(FloatingActionButton.SIZE_MINI);
         programFab1.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN1));
-        programFab1.setImageResource(R.drawable.ic_nav_item);
+        programFab1.setImageResource(R.drawable.ic_airline_seat_individual_suite_black_24dp);
         programFab1.setOnClickListener(this);
 
 
@@ -206,19 +220,18 @@ public class MapsActivity extends FragmentActivity implements
         FloatingActionButton programFab2 = (FloatingActionButton) findViewById(R.id.floating_bttn2);
         programFab2.setButtonSize(FloatingActionButton.SIZE_MINI);
         programFab2.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN2));
-        programFab2.setImageResource(R.drawable.ic_nav_item);
+        programFab2.setImageResource(R.drawable.ic_directions_black_24dp);
         programFab2.setOnClickListener(this);
 
 
         FloatingActionButton programFab3 = (FloatingActionButton) findViewById(R.id.floating_bttn3);
         programFab3.setButtonSize(FloatingActionButton.SIZE_MINI);
         programFab3.setLabelText(getApplicationContext().getString(R.string.FLOATING_BTTN3));
-        programFab3.setImageResource(R.drawable.ic_nav_item);
+        programFab3.setImageResource(R.drawable.ic_done_black_24dp);
         programFab3.setOnClickListener(this);
 
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }//onCreate
-
 
 
     @Override
@@ -234,7 +247,6 @@ public class MapsActivity extends FragmentActivity implements
         mMap.getUiSettings().setMapToolbarEnabled(false);
         locationServiceManager =
                 new LocationServiceManager(getApplicationContext(), MapsActivity.this);
-        Log.d("GhMap_debug", "onMapReady");
 
         mMap.setOnMapClickListener(this);
         mMap.setOnMapLongClickListener(this);
@@ -260,10 +272,6 @@ public class MapsActivity extends FragmentActivity implements
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
 
         addDBmarkers(taxiDriverDB.getTaxiDriverDBInstance(getApplicationContext()));
-
-        Log.d("GhMap_debug", "add marker");
-
-
 
 
 //        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
@@ -291,15 +299,23 @@ public class MapsActivity extends FragmentActivity implements
 
     } //onMapReady
 
+    @Override
+    protected void onResume() {
+        setImageView();
+        super.onResume();
+
+    }
 
     @Override
     public void onMapClick(LatLng latLng) {
         Log.d("GhMap_debug", "onMapClick");
+        taxiDriverDB s = new taxiDriverDB();
+        Log.d("GhMap_debug", String.valueOf(s.getTotalRowNumbers()));
     }
 
     @Override
     public void onMapLongClick(LatLng latLng) {
-        Log.d("GhMap_debug", "onMapLongClick");
+
 
         NewMarkerDialog newMarkerDialog = new NewMarkerDialog();
         newMarkerDialog.showDialog(latLng, this);
@@ -360,8 +376,11 @@ public class MapsActivity extends FragmentActivity implements
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_REST);
                 editor.commit();
 
-                Toast.makeText(MapsActivity.this, "driver state is "+MapsActivity.driverState
+                Toast.makeText(MapsActivity.this, "تغییر وضعیت راننده به : \"خارج از دسترس\""
                         , Toast.LENGTH_SHORT).show();
+                driverStateImageView.setImageResource(R.drawable.rest1background2);
+
+//                setImageView();
 
             }
             break;
@@ -375,8 +394,11 @@ public class MapsActivity extends FragmentActivity implements
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_ONSERVICE);
                 editor.commit();
 
-                Toast.makeText(MapsActivity.this, "driver state is "+MapsActivity.driverState
+                Toast.makeText(MapsActivity.this, "تغییر وضعیت راننده به : \"در حال سرویس دهی\""
                         , Toast.LENGTH_SHORT).show();
+                driverStateImageView.setImageResource(R.drawable.onway1background2);
+
+//                setImageView();
 
             }
             break;
@@ -390,8 +412,11 @@ public class MapsActivity extends FragmentActivity implements
                 editor.putInt(Constant.Driver_STATE_PREF_KEY, Constant.State_ONTHEWAY);
                 editor.commit();
 
-                Toast.makeText(MapsActivity.this, "driver state is "+MapsActivity.driverState
+                Toast.makeText(MapsActivity.this, "تغییر وضعیت راننده به : \"آماده پذیرش سرویس جدید\""
                         , Toast.LENGTH_SHORT).show();
+                driverStateImageView.setImageResource(R.drawable.done1background2);
+
+//                setImageView();
             }
 
             break;
@@ -399,6 +424,28 @@ public class MapsActivity extends FragmentActivity implements
         }
 
     }// onClick floating menu
+
+    public void setImageView(){
+        int a = sharedPreferences.getInt(Constant.Driver_STATE_PREF_KEY,0);
+        switch (a){
+
+            case 1 :
+                driverStateImageView.setImageResource(R.drawable.rest1background2);
+                break;
+
+            case 2:
+                driverStateImageView.setImageResource(R.drawable.onway1background2);
+                break;
+
+            case 3:
+                driverStateImageView.setImageResource(R.drawable.done1background2);
+                break;
+
+            default:
+                break;
+        }
+
+    }
 
     public Action getIndexApiAction() {
         Thing object = new Thing.Builder()
@@ -420,6 +467,8 @@ public class MapsActivity extends FragmentActivity implements
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();
         AppIndex.AppIndexApi.start(client, getIndexApiAction());
+        setImageView();
+
     }
 
     @Override
@@ -432,19 +481,11 @@ public class MapsActivity extends FragmentActivity implements
         client.disconnect();
     }
 
-
-
-
-
-
-
-    public void addDBmarkers(taxiDriverDB taxiDriverDB)
-
-    {
+    public void addDBmarkers(taxiDriverDB taxiDriverDB) {
 
         List<Bundle> markers = new ArrayList<>();
-        Log.i("add markers","Invoked");
-        markers=taxiDriverDB.getTotalMarks();
+
+        markers = taxiDriverDB.getTotalMarks();
 
         for (int i = 0; i < markers.size(); i++) {
 

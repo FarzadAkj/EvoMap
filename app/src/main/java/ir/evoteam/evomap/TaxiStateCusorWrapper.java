@@ -20,12 +20,14 @@ public class TaxiStateCusorWrapper extends CursorWrapper {
     }
 
     public Bundle getTaxiState () {
+        int id = getInt(getColumnIndex("_id"));
         String state = getString(getColumnIndex(driverStateTable.Cols.STATE)) ;
         String cordinateX = getString(getColumnIndex(driverStateTable.Cols.CORDINATE_X)) ;
         String cordinateY = getString(getColumnIndex(driverStateTable.Cols.CORDINATE_Y)) ;
         String dateTime = getString(getColumnIndex(driverStateTable.Cols.DATETIME)) ;
 
         Bundle data = new Bundle() ;
+        data.putInt("_id", id);
         data.putString(Constant.DB_key_Driver_State , state);
         data.putString(Constant.DB_key_Longitude , cordinateX);
         data.putString(Constant.DB_key_Latitude , cordinateY);

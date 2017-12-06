@@ -26,20 +26,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int REQUEST_CODE = 1234;
     Button mLoginButton, mExitButton;
     EditText mUsernameEitText, mPasswordEditText;
-//    SharedPreferences sp;
-//    boolean isLogedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-//        sp = getSharedPreferences("Login", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor e = sp.edit();
-//        e.putBoolean("IsLogIN",false);
+
         super.onCreate(savedInstanceState);
         //crash reporting
         Catcho.Builder(this)
-                .recipients("evomapteam@gmail.com")
-                .build();
+            .recipients("evomapteam@gmail.com")
+            .build();
         setContentView(R.layout.activity_login);
         mLoginButton = (Button) findViewById(R.id.LogInButtonInLoginPage);
         mExitButton = (Button) findViewById(R.id.ExitButtonInLoginPage);
@@ -47,20 +43,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mPasswordEditText = (EditText) findViewById(R.id.PassWordEditText);
         mLoginButton.setOnClickListener(this);
         mExitButton.setOnClickListener(this);
-//        loadTutorial();
+
         sharedPreferences = getSharedPreferences
                 (Constant.PREFERENCES_KEY, 0);
-       boolean isLogedin = sharedPreferences.getBoolean(Constant.ISLOGEDIN_PREF_KEY ,false);
-        if (!isLogedin)
-        {
-            loadTutorial();
 
-        }
-        else
-        {
-            startActivity(new Intent(LoginActivity.this,MapsActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
-        }
 
+        loadTutorial();
 
     }
 
@@ -71,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             {
                 AuthenticateAsync authenticateAsync = new AuthenticateAsync(LoginActivity.this);
                 String temp1 = mUsernameEitText.getText().toString();
-                String temp2 = mPasswordEditText.getText().toString();
+                String temp2 = MD5(mPasswordEditText.getText().toString());
                 if (!temp1.equals("") && !temp2.equals("")) {
 
                     try{
@@ -79,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     }catch(Exception e){
 
-                        Toast.makeText(this, "dasdf", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "خطا!", Toast.LENGTH_SHORT).show();
                     }
 
                 }else {
@@ -125,16 +113,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private ArrayList<TutorialItem> getTutorialItems(Context context) {
-//        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-//                R.color.slide_3, R.drawable.taxi2);
-//
-//        ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
-//        tutorialItems.add(tutorialItem1);
-//        TutorialItem tutorialItem1 = new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-//                R.color.slide_3, R.drawable.taxi2  ,  R.drawable.taxi2);
-
-//        TutorialItem tutorialItem2 =new TutorialItem(R.string.slide_1_Welcome, R.string.EvoMap,
-//                R.color.slide_3, R.drawable.taxi2  ,  R.drawable.taxi2);
 
         TutorialItem tutorialItem3 = new TutorialItem(context.getString(R.string.slide_1_Welcome), context.getString(
                 R.string.EvoMap),
@@ -144,8 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 R.color.slide_2, R.color.transparent  ,  R.drawable.taxi1);
 
         ArrayList<TutorialItem> tutorialItems = new ArrayList<>();
-//        tutorialItems.add(tutorialItem1);
-//        tutorialItems.add(tutorialItem2);
+
         tutorialItems.add(tutorialItem3);
         tutorialItems.add(tutorialItem4);
         return tutorialItems;
@@ -159,6 +136,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    public String MD5(String md5) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+            byte[] array = md.digest(md5.getBytes());
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < array.length; ++i) {
+                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
+            }
+            return sb.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+        }
+        return null;
+    }
 
 }
 

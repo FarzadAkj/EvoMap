@@ -13,7 +13,7 @@ public class Constant {
     public static final String Driver_STATE_PREF_KEY="DriverState";
     public static final String ISLOGEDIN_PREF_KEY = "is loged in";
 
-    public static final String DEFAULT_UPDATE_TIME="2000";
+    public static final String DEFAULT_UPDATE_TIME="10000";
     public static final String DEFAULT_UPDATE_DISTANCE="10";
 
     public static final String FLOATING_BTTN1="at Rest";

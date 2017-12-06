@@ -18,9 +18,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static ir.evoteam.evomap.MapsActivity.sharedPreferences;
 
@@ -72,10 +71,10 @@ public class NewMarkerDialog {
 
                 final String newTitle= newTitle_dialogEditTxt.getText().toString();
                 if (newTitle.equals(null)|| newTitle.equals("")){
-                    Toast.makeText(activity,"Title can not be empty",Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity,"لطفا نامی برای این نشانه وارد کنید.",Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(activity,"Title is valid",Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity,"نشانه اضافه شد.",Toast.LENGTH_LONG).show();
 
                     MarkerOptions marker = new MarkerOptions().position(
                             new LatLng(latLng.latitude, latLng.longitude)).title(newTitle);
@@ -97,16 +96,26 @@ public class NewMarkerDialog {
                         @Override
                         public void run() {
                          HttpConnectionManager connectionManager = new HttpConnectionManager(Constant.MarksServerUrl);
-                            DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
-                            String date = df.format(Calendar.getInstance().getTime());
+
+                            String now = System.currentTimeMillis()/1000 + "";
+
                             sharedPreferences = activity.getSharedPreferences
                                     (Constant.PREFERENCES_KEY, 0);
                             String userid= sharedPreferences.getString(Constant.USER_ID_PREF_KEY,Constant.DEFAULT_USER_ID);
-                            String markASJson = "[{\""+Constant.DB_key_Mark_Longitude +"\":\""+String.format("%f",latLng.longitude)+"\",\"" +
-                                                     Constant.DB_key_Mark_Latitude  +"\":\""+String.format("%f",latLng.latitude )+"\",\"" +
-                                                     Constant.DB_key_Mark_Title+"\":\""+newTitle+"\",\""+
-                                                     "Date_time"+"\":\""+date   +"\",\""+"User_id\":\""+userid +"\"}]";
-                            connectionManager.postDataHttpUrlConnection(Constant.MarksServerUrl,markASJson);
+
+                            JSONObject markASJson = new JSONObject();
+                            try {
+                                markASJson.put(Constant.DB_key_Mark_Longitude, latLng.longitude);
+                                markASJson.put(Constant.DB_key_Mark_Latitude, latLng.latitude);
+                                markASJson.put(Constant.DB_key_Mark_Title, newTitle);
+                                markASJson.put("Date_time", now);
+                                markASJson.put("User_id", userid);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            connectionManager.postDataHttpUrlConnection(Constant.MarksServerUrl,markASJson.toString());
+
                         }
                     });
                     sendmark.start();

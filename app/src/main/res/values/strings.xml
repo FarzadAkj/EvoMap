@@ -51,12 +51,13 @@
     <string name="Log_Out">خروج از حساب کاربری</string>
     <string name="ETC">دیگر...</string>
 
-    <string name="FLOATING_BTTN1">در حال استراحت</string>
-    <string name="FLOATING_BTTN2">در حال سرویس</string>
-    <string name="FLOATING_BTTN3">در راه</string>
+    <string name="FLOATING_BTTN1">خارج از دسترس</string>
+    <string name="FLOATING_BTTN2">در حال سرویس دهی</string>
+    <string name="FLOATING_BTTN3">آماده پزیرش سرویس جدید</string>
     <string name="Driver_State">وضعیت راننده</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="title_activity_starting">StartingActivity</string>
 
 
 </resources>

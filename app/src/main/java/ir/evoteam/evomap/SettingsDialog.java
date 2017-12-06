@@ -1,11 +1,12 @@
 package ir.evoteam.evomap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,7 +34,9 @@ public class SettingsDialog {
     private EditText updateTime_edittxt;
     private EditText updateDistance_edittxt;
 
-    public void showDialog(Activity activity) {
+    public void showDialog(final Activity activity) {
+
+
         SettingsDialog = new Dialog(activity);
         SettingsDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         SettingsDialog.setCancelable(false);
@@ -59,20 +62,41 @@ public class SettingsDialog {
         SettingsDialog.show();
 
         // Bind onclick event handler
-        Settings_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                                     public void onItemClick(AdapterView<?> parent, View view,
-                                                                             int position, long id) {
+        Settings_listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
 
-                                                         Log.d("Ghmap_debug", "item " + position + " clicked");
+
 
                                                          if (position == 0) {
 
-                                                             MapsActivity.isLogedin = false;
-                                                             SharedPreferences.Editor editor = MapsActivity.sharedPreferences.edit();
-                                                             editor.clear();
-                                                             editor.commit();
-                                                             Intent intent = new Intent(context, LoginActivity.class);
-                                                             context.startActivity(intent);
+                                                             AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                                                             alertDialog.setTitle("خروج از حساب کاربری!");
+                                                             alertDialog.setMessage("آیا تمایل دارید از حساب کاربری خود خارج شوید؟");
+                                                             alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                                                 public void onClick(DialogInterface dialog, int which) {
+
+                                                                     MapsActivity.isLogedin = false;
+                                                                     SharedPreferences.Editor editor = MapsActivity.sharedPreferences.edit();
+                                                                     editor.clear();
+                                                                     editor.commit();
+                                                                     Intent intent = new Intent(context, LoginActivity.class);
+                                                                     context.startActivity(intent);
+                                                                     activity.finish();
+
+                                                                 }
+                                                             });
+
+                                                             alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                                                 public void onClick(DialogInterface dialog, int which) {
+                                                                     dialog.cancel();
+                                                                 }
+                                                             });
+
+                                                             alertDialog.show();
+
+
                                                          }
                                                      }
                                                  });
