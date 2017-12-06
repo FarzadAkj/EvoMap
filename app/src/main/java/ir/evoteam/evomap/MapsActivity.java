@@ -69,6 +69,7 @@ public class MapsActivity extends FragmentActivity implements
     public static List<String> Settings_list;
     public static String User_ID ;
     public static boolean isLogedin;
+    private static ImageView evoteam;
 
     public ImageView driverStateImageView ;
 
@@ -107,6 +108,8 @@ public class MapsActivity extends FragmentActivity implements
                 isBound = false;
             }
         };//the service
+
+
 
         //Creating The Service
         Intent i = new Intent(this, WidgetService.class);
@@ -157,7 +160,7 @@ public class MapsActivity extends FragmentActivity implements
 
         isLogedin= (sharedPreferences.getBoolean(Constant.ISLOGEDIN_PREF_KEY , false));
 
-
+        evoteam = (ImageView) findViewById(R.id.evoteam);
         SettingImgBttn = (ImageButton) findViewById(R.id.settingImgBttn);
         MoveToMyLocationImgBttn = (ImageButton) findViewById(R.id.myLocBttn);
         DriverIDtxtView = (TextView) findViewById(R.id.driver_id_txtView);

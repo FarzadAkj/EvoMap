@@ -122,22 +122,26 @@ public class LocationServiceManager extends Context implements android.location.
             double newTime = System.currentTimeMillis();
 
             if(newTime - lastDataTime >= 10000.0){
-                SharedPreferences editor =  MapsActivity.sharedPreferences;
+                SharedPreferences editor = MapsActivity.sharedPreferences;
                 String date = newTime/1000 + "";
                 Bundle temp = new Bundle();
                 temp.putString(Constant.DB_key_Longitude,String.format("%f",longitude));
                 temp.putString(Constant.DB_key_Latitude,String.format("%f",latitude));
                 temp.putString(Constant.DB_key_Driver_State,String.format("%d",editor.getInt(Constant.Driver_STATE_PREF_KEY,1)));
                 temp.putString(Constant.DB_key_DateTime,date);
-                Log.d("testdb", temp.toString());
-                Log.d("testdb", String.valueOf(mTaxiDriverDB.getTotalRowNumbers()));
+//                Log.d("testdb", temp.toString());
+//                Log.d("testdb", String.valueOf(mTaxiDriverDB.getTotalRowNumbers()));
                 MapsActivity.lastDataTime = System.currentTimeMillis();
                 mTaxiDriverDB.addState(temp);
                 editor.edit().putString("longitude", longitude + "").commit();
                 editor.edit().putString("latitude", latitude + "").commit();
             }
 
-            SystemClock.sleep(500);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             run();
         }
     };

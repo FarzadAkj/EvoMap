@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 AuthenticateAsync authenticateAsync = new AuthenticateAsync(LoginActivity.this);
                 String temp1 = mUsernameEitText.getText().toString();
                 String temp2 = MD5(mPasswordEditText.getText().toString());
-                Toast.makeText(this, temp2, Toast.LENGTH_SHORT).show();
                 if (!temp1.equals("") && !temp2.equals("")) {
 
                     try{
