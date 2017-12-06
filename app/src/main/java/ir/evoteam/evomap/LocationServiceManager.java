@@ -129,8 +129,6 @@ public class LocationServiceManager extends Context implements android.location.
                 temp.putString(Constant.DB_key_Latitude,String.format("%f",latitude));
                 temp.putString(Constant.DB_key_Driver_State,String.format("%d",editor.getInt(Constant.Driver_STATE_PREF_KEY,1)));
                 temp.putString(Constant.DB_key_DateTime,date);
-//                Log.d("testdb", temp.toString());
-//                Log.d("testdb", String.valueOf(mTaxiDriverDB.getTotalRowNumbers()));
                 MapsActivity.lastDataTime = System.currentTimeMillis();
                 mTaxiDriverDB.addState(temp);
                 editor.edit().putString("longitude", longitude + "").commit();
